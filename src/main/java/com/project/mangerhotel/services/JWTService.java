@@ -3,6 +3,7 @@ package com.project.mangerhotel.services;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.function.Function;
 
-@Service
+@Component
 public class JWTService {
 
     //take out the email from payload
