@@ -1,6 +1,6 @@
 package com.project.mangerhotel.auth;
 
-import com.project.mangerhotel.domain.dto.ResReq;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,24 +18,24 @@ public class AuthenController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<ResReq> register(
-            @RequestBody ResReq registerRequest)
+    public ResponseEntity<AuthenticationResponse> register(
+            @RequestBody RegisterRequest request)
     {
-        return ResponseEntity.ok(authenticationService.register(registerRequest));
+        return ResponseEntity.ok(authenticationService.register(request));
     }
 
 
     @PostMapping("/signin")
-    public ResponseEntity<ResReq> signIn(
-            @RequestBody ResReq SignInRequest)
+    public ResponseEntity<AuthenticationResponse> signIn(
+            @RequestBody AuthenticationRequest SignInRequest)
     {
         return ResponseEntity.ok(authenticationService.signIn(SignInRequest));
     }
 
-    @PostMapping("/refresh")
-    public ResponseEntity<ResReq> refresh(
-            @RequestBody ResReq refreshTokenRequest)
-    {
-        return ResponseEntity.ok(authenticationService.refreshToken(refreshTokenRequest));
-    }
+//    @PostMapping("/refresh")
+//    public ResponseEntity<ResReq> refresh(
+//            @RequestBody ResReq refreshTokenRequest)
+//    {
+//        return ResponseEntity.ok(authenticationService.refreshToken(refreshTokenRequest));
+//    }
 }
