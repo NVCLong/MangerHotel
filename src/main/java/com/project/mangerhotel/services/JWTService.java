@@ -3,6 +3,7 @@ package com.project.mangerhotel.services;
 import com.project.mangerhotel.domain.entity.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,14 @@ import java.util.function.Function;
 public class JWTService {
 
     //take out the email from payload
-    private static final String SECRET_KEY = "gdYvZYaC8/9RiQ9KeJsvto1lX5LYZEWSJAucFmg6LBActukQQg8j+fA1DHXpzik+";
+    @Value("${application.security.jwt.secret-key}")
+    private String secretKey;
+
+    @Value("${application.security.jwt.expiration-ms}")
+    private long jwtExpiration;
+
+    @Value("${application.security.jwt.refresh-token.expiration}")
+    private long refreshTokenExpiration;
 
     public String extractEmail(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -48,11 +56,19 @@ public class JWTService {
     //gerate token
 
     public String generateToken(Map<String, Object> extraClaims,UserDetails userDetails) {
+        return buildToken(extraClaims, userDetails, jwtExpiration);
+    }
+
+    public String generateRefreshToken(UserDetails userDetails) {
+        return buildToken(new HashMap<>(), userDetails, refreshTokenExpiration);
+    }
+
+    private String buildToken(Map<String, Object> extraClaims,UserDetails userDetails, long expiration){
         return Jwts.builder()
                 .claims(extraClaims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .expiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSignKey())
                 .compact();
     }
@@ -65,7 +81,7 @@ public class JWTService {
     }
 
     private SecretKey getSignKey() {
-        byte[] key = Base64.getDecoder().decode(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
+        byte[] key = Base64.getDecoder().decode(secretKey.getBytes(StandardCharsets.UTF_8));
         return new SecretKeySpec(key,"HmacSHA256");
     }
 
