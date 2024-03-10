@@ -68,7 +68,7 @@ public class JWTService {
     }
 
 
-    public String refreshToken(HashMap<String, Objects> claims, UserDetails userDetails) {
+    public String generateRefreshToken(HashMap<String, Objects> claims, UserDetails userDetails) {
         return Jwts.builder()
                 .claims(claims)
                 .subject(userDetails.getUsername())

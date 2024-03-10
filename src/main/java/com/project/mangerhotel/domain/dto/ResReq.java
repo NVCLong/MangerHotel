@@ -2,6 +2,7 @@ package com.project.mangerhotel.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.project.mangerhotel.domain.entity.UserEntity;
 import lombok.Data;
 
 @Data
@@ -22,7 +23,7 @@ public class ResReq {
     //Users
     private String email;
     private String password;
-    private String userEntity;
+    private UserEntity userEntity;
     private String role;
 
     //
