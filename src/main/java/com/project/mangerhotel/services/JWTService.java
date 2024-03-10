@@ -11,6 +11,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Objects;
 import java.util.function.Function;
 
 @Service
@@ -18,6 +20,13 @@ public class JWTService {
 
     //take out the email from payload
     private static final String SECRET_KEY = "8BD6A2967C335EFC382DF16996486";
+    private SecretKey key;
+
+    public JWTService() {
+        byte[] key = Base64.getDecoder().decode(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
+        this.key = new SecretKeySpec(key, "HmacSHA256");
+    }
+
 
     public String extractEmail(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -29,15 +38,10 @@ public class JWTService {
     }
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
-                .verifyWith((SecretKey) getSignKey())
+                .verifyWith(key)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-    }
-
-    private Key getSignKey() {
-        byte[] key = Base64.getDecoder().decode(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
-        return new SecretKeySpec(key, "HmacSHA256");
     }
 
     // check for key validate or not
@@ -49,6 +53,28 @@ public class JWTService {
 
     public boolean isTokenExpired(String token) {
         return extractClaim(token, Claims::getExpiration).before(new Date());
+    }
+
+    //gerate token
+
+    public String generateToken(UserDetails userDetails) {
+        return Jwts.builder()
+                .subject(userDetails.getUsername())
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .signWith(key)
+                .compact();
+    }
+
+
+    public String refreshToken(HashMap<String, Objects> claims, UserDetails userDetails) {
+        return Jwts.builder()
+                .claims(claims)
+                .subject(userDetails.getUsername())
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .signWith(key)
+                .compact();
     }
 
 }
