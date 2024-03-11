@@ -1,6 +1,6 @@
 package com.project.mangerhotel.services;
 
-import com.project.mangerhotel.domain.entity.UserEntity;
+import com.project.mangerhotel.model.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;

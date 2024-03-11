@@ -1,4 +1,4 @@
-package com.project.mangerhotel.domain.entity;
+package com.project.mangerhotel.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -42,8 +42,9 @@ public class UserEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return userName;
     }
+
 
     @Override
     public boolean isAccountNonExpired() {

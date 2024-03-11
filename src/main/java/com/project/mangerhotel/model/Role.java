@@ -1,4 +1,4 @@
-package com.project.mangerhotel.domain.entity;
+package com.project.mangerhotel.model;
 
 public enum Role {
     USER,

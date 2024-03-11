@@ -1,4 +1,4 @@
-package com.project.mangerhotel.auth;
+package com.project.mangerhotel.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

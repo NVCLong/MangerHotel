@@ -1,8 +1,8 @@
-package com.project.mangerhotel.auth;
+package com.project.mangerhotel.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.mangerhotel.domain.entity.Role;
-import com.project.mangerhotel.domain.entity.UserEntity;
+import com.project.mangerhotel.model.*;
+import com.project.mangerhotel.model.*;
 import com.project.mangerhotel.repositories.UserRepository;
 import com.project.mangerhotel.services.JWTService;
 import com.project.mangerhotel.token.Token;
@@ -120,5 +120,6 @@ public class AuthenticationService {
             }
         }
     }
-
 }
+
+

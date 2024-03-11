@@ -1,6 +1,10 @@
-package com.project.mangerhotel.auth;
+package com.project.mangerhotel.controller;
 
 
+import com.project.mangerhotel.model.AuthenticationRequest;
+import com.project.mangerhotel.model.AuthenticationResponse;
+import com.project.mangerhotel.model.RegisterRequest;
+import com.project.mangerhotel.services.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
