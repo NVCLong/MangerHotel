@@ -1,4 +1,4 @@
-package com.project.mangerhotel.auth;
+package com.project.mangerhotel.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AuthenticationRequest {
-
+public class RegisterRequest {
+    private String userName;
     private String email;
-    String password;
+    private String password;
 }

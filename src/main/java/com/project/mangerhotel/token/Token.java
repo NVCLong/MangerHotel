@@ -1,6 +1,6 @@
 package com.project.mangerhotel.token;
 
-import com.project.mangerhotel.domain.entity.UserEntity;
+import com.project.mangerhotel.model.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,3 +32,5 @@ public class Token {
     @JoinColumn(name = "user_id")
     public UserEntity user;
 }
+
+// token ( username, id )
