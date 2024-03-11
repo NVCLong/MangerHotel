@@ -1,5 +1,6 @@
-package com.project.mangerhotel.token;
+package com.project.mangerhotel.repositories;
 
+import com.project.mangerhotel.model.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
