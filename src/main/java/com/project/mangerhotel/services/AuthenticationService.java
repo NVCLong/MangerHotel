@@ -2,12 +2,10 @@ package com.project.mangerhotel.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.mangerhotel.model.*;
-import com.project.mangerhotel.model.*;
 import com.project.mangerhotel.repositories.UserRepository;
-import com.project.mangerhotel.services.JWTService;
-import com.project.mangerhotel.token.Token;
-import com.project.mangerhotel.token.TokenRepository;
-import com.project.mangerhotel.token.TokenType;
+import com.project.mangerhotel.model.Token;
+import com.project.mangerhotel.repositories.TokenRepository;
+import com.project.mangerhotel.model.TokenType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

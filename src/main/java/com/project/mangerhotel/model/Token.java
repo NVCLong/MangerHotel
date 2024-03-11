@@ -1,6 +1,5 @@
-package com.project.mangerhotel.token;
+package com.project.mangerhotel.model;
 
-import com.project.mangerhotel.model.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

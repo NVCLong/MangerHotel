@@ -1,7 +1,7 @@
 package com.project.mangerhotel.config;
 
 import com.project.mangerhotel.services.JWTService;
-import com.project.mangerhotel.token.TokenRepository;
+import com.project.mangerhotel.repositories.TokenRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,6 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         jwt = authorizationHeader.substring(7); //store the token without the "Bearer " prefix
 
         userEmail = jwtService.extractEmail(jwt);
+        System.out.println(userEmail);
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails user = this.userDetailsService.loadUserByUsername(userEmail);
             var isTokenValid = tokenRepository.findByToken(jwt)

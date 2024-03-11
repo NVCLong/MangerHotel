@@ -1,10 +1,9 @@
 import {useState} from "react";
 import {flushSync} from "react-dom";
 import{useNavigate} from "react-router-dom";
-
-
+import  axios from "axios"
 export  default  function Register(){
-    const [username, setUsername]= useState("")
+    const [userName, setUsername]= useState("")
     const [password, setPassword]= useState("")
     const [email, setEmail]= useState("")
     const navigator= useNavigate();
@@ -18,7 +17,7 @@ export  default  function Register(){
     const handleInputEmail=(e)=>{
         setEmail(e.target.value)
     }
-    const handleSubmit= (e)=>{
+    const handleSubmit= async (e)=>{
         e.preventDefault();
         if(email.match(regex)===false){
             alert("Please enter a valid email")
@@ -27,11 +26,12 @@ export  default  function Register(){
                 alert("Password must be at least 5 characters")
             }else {
                 let user={
-                    username: username,
+                    userName: userName,
                     email:email,
                     password:password
                 }
-                console.log(user);
+                const  response= await axios.post("http://localhost:8080/api/v1/auth/register", user);
+                console.log(response.data)
                 navigator("/")
             }
         }
@@ -48,7 +48,7 @@ export  default  function Register(){
                             <label className="text-lg font-medium "> Username </label>
                             <input className="w-full border-2 border-gray-100 rounded-xl p-4 mt-3 bg-transparent"
                                    type="text"
-                                   placeholder="Enter your username" value={username}
+                                   placeholder="Enter your username" value={userName}
                                    onChange={handleInputUsername}/>
                         </div>
                         <div className="mb-2">

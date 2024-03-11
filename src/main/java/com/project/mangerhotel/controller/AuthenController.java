@@ -37,6 +37,7 @@ public class AuthenController {
     public ResponseEntity<AuthenticationResponse> signIn(
             @RequestBody AuthenticationRequest SignInRequest)
     {
+        System.out.println(SignInRequest);
         return ResponseEntity.ok(authenticationService.signIn(SignInRequest));
     }
 
