@@ -18,6 +18,9 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.UUID;
 
+import static org.springframework.util.MimeTypeUtils.IMAGE_JPEG_VALUE;
+import static org.springframework.util.MimeTypeUtils.IMAGE_PNG_VALUE;
+
 @RestController
 @RequestMapping("/api/v1")
 public class RoomController {
@@ -40,5 +43,11 @@ public class RoomController {
     public ResponseEntity<Room> addRoom(@RequestParam("roomType") String roomType, @RequestParam("roomPrice") BigDecimal roomPrice, @RequestParam("image") MultipartFile file) throws SQLException, IOException {
         String fileName= azureService.upload(file);
         return ResponseEntity.status(200).body(roomService.addNewRoom(roomType, roomPrice, fileName ));
+    }
+
+    @GetMapping(value = "/photo/{filename}", produces ={IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE} )
+    public ResponseEntity<byte[]> getPhoto(@PathVariable("filename") String filename) throws IOException{
+        System.out.println(filename);
+        return ResponseEntity.ok(azureService.getFile(filename));
     }
 }
