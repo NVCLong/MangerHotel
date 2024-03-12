@@ -24,18 +24,11 @@ public class RoomService {
     @Autowired
     RoomRepository roomRepository;
 
-    public Room addNewRoom(Room room) throws SQLException, IOException {
+    public Room addNewRoom(String roomType, BigDecimal roomPrice, String fileName) throws SQLException, IOException {
         Room newRoom = new Room();
-        newRoom.setRoomType(room.getRoomType());
-        newRoom.setRoomPrice(room.getRoomPrice());
-
-        // upload in cloud set up latter
-//        if(!file.isEmpty()) {
-//            byte[] photoBytes = file.getBytes();
-//            Blob photoBlob = new SerialBlob(photoBytes);
-//            newRoom.setPhoto(photoBlob);
-//
-//        }
+        newRoom.setRoomType(roomType);
+        newRoom.setRoomPrice(roomPrice);
+        newRoom.setPhoto(fileName);
         return  roomRepository.save(newRoom);
     }
 }
