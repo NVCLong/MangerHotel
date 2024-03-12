@@ -1,9 +1,10 @@
 import {useState} from "react";
 import{useNavigate} from "react-router-dom";
+import axios from "axios";
 
 
 export default function Login(){
-    const [username,setUserName]=useState("")
+    const [email,setEmail]=useState("")
     const [password,setPassword]=useState("")
     const regex=/[^\s@]+@[^\s@]+\.[^\s@]+/gi
 
@@ -11,7 +12,7 @@ export default function Login(){
 
 
     function handleInputUsername(e) {
-     setUserName(e.target.value)
+     setEmail(e.target.value)
     }
 
     function handleInputPassword(e) {
@@ -23,16 +24,19 @@ export default function Login(){
         navigator("/register")
 
     }
-    function handleSubmit(e){
+    async function  handleSubmit(e){
         e.preventDefault();
         if(password.length<5){
             alert("Please enter password again")
         }else {
             let user= {
-                username:username,
+                email:email,
                 password:password
             }
-            console.log(user)
+            const response= await axios.post("http://localhost:8080/api/v1/auth/register",user)
+            console.log(response.data)
+            localStorage.setItem("access_token",response.data.access_token);
+            document.cookie=`refresh_token=${response.data.refresh_token}`
         }
     }
 
@@ -46,10 +50,10 @@ export default function Login(){
                             details</p>
                         <form className="mt-8" >
                             <div className="mb-2">
-                                <label className="text-lg font-medium "> Username </label>
+                                <label className="text-lg font-medium "> Email </label>
                                 <input className="w-full border-2 border-gray-100 rounded-xl p-4 mt-3 bg-transparent"
-                                       type="text"
-                                       placeholder="Enter your username" value={username}
+                                       type="email"
+                                       placeholder="Enter your username" value={email}
                                        onChange={handleInputUsername}/>
                             </div>
                             <div>
