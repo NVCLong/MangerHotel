@@ -8,13 +8,16 @@ import {
 } from "react-router-dom";
 import Login from "./page/Login";
 import Register from "./page/Register";
+import Navbar from "./component/Navbar";
+import Home from "./page/Home";
 function App() {
 
   return (
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login/>} />
+            <Route path="/login" element={<Login/>} />
             <Route path="/register" element={<Register/>} />
+            <Route path="/" element={<Home/>} />
         </Routes>
       </BrowserRouter>
   );
