@@ -60,7 +60,7 @@ public class AuthenticationService {
                 )
         );
 
-        var user =  userRepository.findByEmail(signInRequest.getEmail())
+        UserEntity user =  userRepository.findByEmail(signInRequest.getEmail())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
@@ -74,14 +74,22 @@ public class AuthenticationService {
     }
 
     private void saveUserToken(UserEntity user, String jwtToken) {
-        var token = Token.builder()
-                .user(user)
-                .token(jwtToken)
-                .tokenType(TokenType.BEARER)
-                .expired(false)
-                .revoked(false)
-                .build();
-        tokenRepository.save(token);
+        var existingToken = tokenRepository.findByUser(user);
+        if (existingToken.isPresent()) {
+            // If token already exists, update its value
+            Token token = existingToken.get();
+            token.setToken(jwtToken);
+            tokenRepository.save(token);
+        } else {
+            var token = Token.builder()
+                    .user(user)
+                    .token(jwtToken)
+                    .tokenType(TokenType.BEARER)
+                    .expired(false)
+                    .revoked(false)
+                    .build();
+            tokenRepository.save(token);
+        }
     }
 
     private void revokeAllUserTokens(UserEntity user) {
