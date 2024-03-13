@@ -50,4 +50,11 @@ public class RoomController {
         System.out.println(filename);
         return ResponseEntity.ok(azureService.getFile(filename));
     }
+
+    @PutMapping(value="/edit/room/{id}", consumes = "multipart/form-data", produces = "application/json")
+    public ResponseEntity<Room> editRoom(@PathVariable("id") Long id,@RequestParam("roomType") String roomType, @RequestParam("roomPrice") BigDecimal roomPrice, @RequestParam("image") MultipartFile file) throws IOException {
+        return ResponseEntity.ok(roomService.updateRoom(id,roomType,roomPrice,file));
+    }
+
+
 }
