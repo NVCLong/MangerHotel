@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.UUID;
 
 @Service
 public class AzureService {
@@ -20,10 +21,11 @@ public class AzureService {
     public String upload(MultipartFile file) throws IOException {
 
         //todo uuid
-        BlobClient blobClient= blobContainerClient.getBlobClient(file.getOriginalFilename());
+        String fileName= UUID.randomUUID().toString()+"."+file.getOriginalFilename().split("\\.")[1];
+        BlobClient blobClient= blobContainerClient.getBlobClient(fileName);
         blobClient.upload(file.getInputStream(), file.getSize(),true);
 
-        return file.getOriginalFilename();
+        return fileName;
     }
 
     public byte[]  getFile(String filename){
@@ -32,5 +34,17 @@ public class AzureService {
         blobClient.downloadStream(outputStream);
         final byte[] bytes=outputStream.toByteArray();
         return bytes;
+    }
+
+    public String updateImage(String filename, MultipartFile newFile) throws IOException{
+        // delete the existing file
+        BlobClient blobClient= blobContainerClient.getBlobClient(filename);
+        blobClient.deleteIfExists();
+
+        //
+        String fileName= UUID.randomUUID().toString()+"."+newFile.getOriginalFilename().split("\\.")[1];
+        blobClient= blobContainerClient.getBlobClient(fileName);
+        blobClient.upload(newFile.getInputStream(),newFile.getSize(), true);
+        return fileName;
     }
 }
