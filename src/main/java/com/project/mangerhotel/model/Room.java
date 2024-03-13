@@ -17,7 +17,8 @@ public class Room {
 
     private String roomType;
     private BigDecimal roomPrice;
-    private boolean isBooked= false;
+    @Column(name = "booked")
+    private boolean booked= false;
     private String photo;
 
     @OneToMany(mappedBy = "room",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
