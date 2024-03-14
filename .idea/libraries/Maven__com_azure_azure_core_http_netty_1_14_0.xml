@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Maven: com.azure:azure-core-http-netty:1.14.0" type="java-imported" external-system-id="Maven">
+    <properties groupId="com.azure" artifactId="azure-core-http-netty" version="1.14.0" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/azure/azure-core-http-netty/1.14.0/azure-core-http-netty-1.14.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/azure/azure-core-http-netty/1.14.0/azure-core-http-netty-1.14.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/azure/azure-core-http-netty/1.14.0/azure-core-http-netty-1.14.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
