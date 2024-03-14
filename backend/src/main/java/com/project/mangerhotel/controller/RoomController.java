@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -61,6 +62,17 @@ public class RoomController {
     public ResponseEntity<Room> editRoom(@PathVariable("id") Long id,@RequestParam("roomType") String roomType, @RequestParam("roomPrice") BigDecimal roomPrice, @RequestParam("image") MultipartFile file) throws IOException {
         return ResponseEntity.ok(roomService.updateRoom(id,roomType,roomPrice,file));
     }
+
+    @GetMapping("/rooms/available")
+    public ResponseEntity<List<Room>> getAllAvailableRooms(){
+        return  ResponseEntity.ok(roomService.geAllAvailableRoom());
+    }
+
+    @GetMapping("/rooms/booked")
+    public ResponseEntity<List<Room>> getAllBookedRooms(){
+        return ResponseEntity.ok(roomService.getAllBookingRoom());
+    }
+
 
 
 }

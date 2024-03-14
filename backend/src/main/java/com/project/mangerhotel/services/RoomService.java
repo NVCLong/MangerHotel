@@ -17,9 +17,10 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 
 @Service
@@ -38,10 +39,6 @@ public class RoomService {
         return  roomRepository.save(newRoom);
     }
 
-    public Optional<Room> getAllRoomType(){
-        return roomRepository.findRoomByRoomType("roomType");
-    }
-
     public Room updateRoom(Long id, String roomType, BigDecimal roomPrice, MultipartFile file)throws IOException {
         Room room=roomRepository.findById( id).orElseThrow(null);
         String newFileName = azureService.updateImage(room.getPhoto(),file);
@@ -54,4 +51,17 @@ public class RoomService {
             return null;
         }
     }
+
+    public List<Room> geAllAvailableRoom(){
+        List<Room> rooms = new ArrayList<>();
+        for(Room room : roomRepository.findByBooked(false)){
+            rooms.add(room);
+        }
+        return rooms;
+    }
+    public List<Room> getAllBookingRoom(){
+        return  roomRepository.findByBooked(true);
+    }
+
+
 }
