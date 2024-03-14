@@ -16,13 +16,14 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.util.MimeTypeUtils.IMAGE_JPEG_VALUE;
 import static org.springframework.util.MimeTypeUtils.IMAGE_PNG_VALUE;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/rooms")
 public class RoomController {
 
     @Autowired
@@ -43,6 +44,11 @@ public class RoomController {
     public ResponseEntity<Room> addRoom(@RequestParam("roomType") String roomType, @RequestParam("roomPrice") BigDecimal roomPrice, @RequestParam("image") MultipartFile file) throws SQLException, IOException {
         String fileName= azureService.upload(file);
         return ResponseEntity.status(200).body(roomService.addNewRoom(roomType, roomPrice, fileName ));
+    }
+
+    @GetMapping("/room-types")
+    public Optional<Room> getRoomType(){
+        return roomService.getAllRoomType();
     }
 
     @GetMapping(value = "/photo/{filename}", produces ={IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE} )
