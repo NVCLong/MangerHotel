@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Long> {
     @Query("SELECT distinct r.roomType FROM Room r")
-    Optional<Room> findRoomByRoomType(String roomType);
+    List<String> findDistinctRoomType();
 
     Optional<Room> findById(Long Long);
 
