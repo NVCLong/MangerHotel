@@ -27,7 +27,7 @@ export default function Navbar() {
                     </div>
                     <div className="hidden sm:flex items-center">
                         <Tooltip title="">
-                            <Button className="text-gray-500 bg-gradient-to-tr from-red-300 to-pink-500 focus:outline-none focus:text-gray-700 focus:bg-gray-50 transition duration-150 ease-in-out" variant="contained">
+                            <Button className="text-gray-500 bg-gradient-to-br from-pink-200 to-pink-400 focus:outline-none focus:text-white focus:bg-gray-50 transition duration-150 ease-in-out" variant="contained" size="small">
                                 Find my booking
                             </Button>
                         </Tooltip>

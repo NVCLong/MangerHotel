@@ -19,6 +19,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -35,6 +36,10 @@ public class RoomService {
         newRoom.setRoomPrice(roomPrice);
         newRoom.setPhoto(fileName);
         return  roomRepository.save(newRoom);
+    }
+
+    public Optional<Room> getAllRoomType(){
+        return roomRepository.findRoomByRoomType("roomType");
     }
 
     public Room updateRoom(Long id, String roomType, BigDecimal roomPrice, MultipartFile file)throws IOException {
