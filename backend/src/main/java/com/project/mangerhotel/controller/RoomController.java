@@ -1,10 +1,7 @@
 package com.project.mangerhotel.controller;
 
-import com.azure.storage.blob.BlobClient;
-import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
 import com.project.mangerhotel.model.Room;
-import com.project.mangerhotel.model.RoomResponse;
 import com.project.mangerhotel.services.AzureService;
 import com.project.mangerhotel.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +13,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
 
 import static org.springframework.util.MimeTypeUtils.IMAGE_JPEG_VALUE;
 import static org.springframework.util.MimeTypeUtils.IMAGE_PNG_VALUE;
@@ -48,7 +42,7 @@ public class RoomController {
     }
 
     @GetMapping("/room-types")
-    public Optional<Room> getRoomType(){
+    public List<String> getRoomType(){
         return roomService.getAllRoomType();
     }
 

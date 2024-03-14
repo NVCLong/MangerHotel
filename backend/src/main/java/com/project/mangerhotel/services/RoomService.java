@@ -39,6 +39,10 @@ public class RoomService {
         return  roomRepository.save(newRoom);
     }
 
+    public List<String> getAllRoomType(){
+        return roomRepository.findDistinctRoomType();
+    }
+
     public Room updateRoom(Long id, String roomType, BigDecimal roomPrice, MultipartFile file)throws IOException {
         Room room=roomRepository.findById( id).orElseThrow(null);
         String newFileName = azureService.updateImage(room.getPhoto(),file);
