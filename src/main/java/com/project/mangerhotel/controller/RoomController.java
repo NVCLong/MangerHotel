@@ -8,6 +8,7 @@ import com.project.mangerhotel.model.RoomResponse;
 import com.project.mangerhotel.services.AzureService;
 import com.project.mangerhotel.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -57,15 +60,34 @@ public class RoomController {
         return ResponseEntity.ok(roomService.updateRoom(id,roomType,roomPrice,file));
     }
 
+    // get all rooms available from the checkin day to checkout day
+
     @GetMapping("/rooms/available")
-    public ResponseEntity<List<Room>> getAllAvailableRooms(){
-        return  ResponseEntity.ok(roomService.geAllAvailableRoom());
+    public List<RoomResponse> geAllAvailableRoom(
+            @RequestParam("checkInDate") @DateTimeFormat(iso= DateTimeFormat.ISO.DATE) LocalDate checkInDate,
+            @RequestParam("checkOutDate") @DateTimeFormat(iso= DateTimeFormat.ISO.DATE) LocalDate checkOutDate,
+            @RequestParam("roomType") String roomType
+    ){
+        List<Room> rooms = roomService.getAllAvailableRooms(checkInDate,checkOutDate,roomType);
+
+        // se lay duoc tat ca cac room , photo se la dang url thi muon hien hinh anh thi goi API
+        List<RoomResponse> responses= new ArrayList<>();
+        for (Room room: rooms) {
+            String photoUrl= "http://localhost:8080/api/v1/photo/"+ room.getPhoto();
+            System.out.println(photoUrl);
+            responses.add(new RoomResponse(room,photoUrl));
+        }
+        return responses;
     }
 
-    @GetMapping("/rooms/booked")
-    public ResponseEntity<List<Room>> getAllBookedRooms(){
-        return ResponseEntity.ok(roomService.getAllBookingRoom());
+    // Get All rooms
+
+    @GetMapping("/rooms")
+    public ResponseEntity<List<Room>> getAllRooms(){
+        return ResponseEntity.ok(roomService.getAllRooms());
     }
+
+
 
 
 
