@@ -1,5 +1,6 @@
 package com.project.mangerhotel.services;
 
+import com.azure.storage.blob.BlobClient;
 import com.project.mangerhotel.model.BookedRoom;
 import com.project.mangerhotel.model.Room;
 import com.project.mangerhotel.model.RoomResponse;
@@ -9,7 +10,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -17,6 +20,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -56,16 +60,22 @@ public class RoomService {
         }
     }
 
-    public List<Room> geAllAvailableRoom(){
-        List<Room> rooms = new ArrayList<>();
-        for(Room room : roomRepository.findByBooked(false)){
-            rooms.add(room);
-        }
-        return rooms;
+    public List<Room> getAllRooms(){
+        return  roomRepository.findAll();
     }
-    public List<Room> getAllBookingRoom(){
-        return  roomRepository.findByBooked(true);
+
+    //delete rooms
+
+
+
+    // get all booking rooms
+
+    public List<Room> getAllAvailableRooms(LocalDate checkInDate, LocalDate checkOutDate,String roomType){
+
+        List<Room> rooms= roomRepository.findAvailableRoomsByDateAndType(checkInDate,checkOutDate,roomType);
+        return  rooms;
     }
+
 
 
 }
