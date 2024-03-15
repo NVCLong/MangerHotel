@@ -95,15 +95,6 @@ public class RoomController {
     public ResponseEntity<Optional<Room>> getRoomById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(roomService.getRoomById(id));
     }
-    @GetMapping("/rooms/available")
-    public ResponseEntity<List<Room>> getAllAvailableRooms(){
-        return  ResponseEntity.ok(roomService.geAllAvailableRoom());
-    }
-
-    @GetMapping("/rooms/booked")
-    public ResponseEntity<List<Room>> getAllBookedRooms(){
-        return ResponseEntity.ok(roomService.getAllBookingRoom());
-    }
 
 
 

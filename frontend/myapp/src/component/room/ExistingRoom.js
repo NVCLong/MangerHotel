@@ -9,12 +9,12 @@ import RoomPagination from "../common/RoomPagination";
 import RoomFilter from "../common/RoomFilter";
 
 const ExistingRoom = () => {
-    const [rooms, setRooms] = useState([]);
+    const [rooms, setRooms] = useState([ {id: "", roomType: "", roomPrice: ""} ]);
     const [currentPage, setCurrentPage] = useState(1);
     const [roomsPerPage] = useState(8);
 
-    const [filterRooms, setFilterRooms] = useState([]);
-    const [selectedRoom, setSelectedRoom] = useState("");
+    const [filterRooms, setFilterRooms] = useState([{id: "", roomType: "", roomPrice: ""}]);
+    const [selectedRoomType, setSelectedRoomType] = useState("");
 
     const [isLoading, setIsLoading] = useState(false);
     const [success, setSuccess] = useState("");
@@ -37,6 +37,16 @@ const ExistingRoom = () => {
             setIsLoading(false);
         }
     }
+
+    useEffect(() => {
+        if (selectedRoomType === "") {
+            setFilterRooms(rooms)
+        } else {
+            const filteredRooms = rooms.filter((room) => room.roomType === selectedRoomType)
+            setFilterRooms(filteredRooms)
+        }
+        setCurrentPage(1)
+    }, [rooms, selectedRoomType])
 
     const handlePaginationClick = (pageNumber) => {
         setCurrentPage(pageNumber);

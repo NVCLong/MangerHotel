@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
-import logo from './logo.svg';
->>>>>>> f752a5b3e6a4457bbd309b48f240c7e2d070380e
+
 import './App.css';
 
 import {
@@ -14,20 +11,26 @@ import Register from "./page/Register";
 import Home from "./page/Home";
 import AddRoom from "./component/room/AddRoom";
 import ExistingRoom from "./component/room/ExistingRoom";
+import EditRoom from "./component/room/EditRoom";
+import Navbar from "./component/layout/Navbar";
+import Footer from "./component/layout/Footer";
 function App() {
 
   return (
       <>
           <main>
               <BrowserRouter>
+                  <Navbar/>
                 <Routes>
                     <Route path="/login" element={<Login/>} />
                     <Route path="/register" element={<Register/>} />
                     <Route path="/" element={<Home/>} />
                     <Route path="/existing-room" element={<ExistingRoom/>} />
                     <Route path="/add-room" element={<AddRoom/>} />
+                    <Route path="/edit-room" element={<EditRoom/>} />
                 </Routes>
               </BrowserRouter>
+              <Footer/>
           </main>
       </>
   );

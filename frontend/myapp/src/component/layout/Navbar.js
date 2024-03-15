@@ -18,16 +18,16 @@ export default function Navbar() {
                         <h1 className="text-lg font-semibold">THANH DAT HOTEL</h1>
                     </div>
                     <div className="hidden sm:flex sm:space-x-8">
-                        <Link to="/browse" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        <Link to="/browse-all-room" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             Browse all rooms
                         </Link>
-                        <Link to="/manage" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        <Link to={"/admin"} className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             Manage Rooms
                         </Link>
                     </div>
                     <div className="hidden sm:flex items-center">
                         <Tooltip title="">
-                            <Button className="text-gray-500 bg-gradient-to-br from-pink-200 to-pink-400 focus:outline-none focus:text-white focus:bg-gray-50 transition duration-150 ease-in-out" variant="contained" size="small">
+                            <Button component={Link} to={"/find-booking"} className="text-gray-500 bg-gradient-to-br from-pink-200 to-pink-400 focus:outline-none focus:text-white focus:bg-gray-50 transition duration-150 ease-in-out" variant="contained" size="small">
                                 Find my booking
                             </Button>
                         </Tooltip>
@@ -38,13 +38,13 @@ export default function Navbar() {
                                 displayEmpty
                                 inputProps={{ 'aria-label': 'Without label' }}
                             >
-                                <MenuItem value="">
+                                <MenuItem component={Link} to="/account" value="">
                                     <em>Account</em>
                                 </MenuItem>
-                                <MenuItem value={10}>Login</MenuItem>
-                                <MenuItem value={20}>Profile</MenuItem>
+                                <MenuItem component={Link} to="/login" value="">Login</MenuItem>
+                                <MenuItem component={Link} to="/profile" value="">Profile</MenuItem>
                                 <Divider />
-                                <MenuItem value={30}>Logout</MenuItem>
+                                <MenuItem component={Link} to="/logout" value="">Logout</MenuItem>
                             </Select>
                         </FormControl>
                     </div>

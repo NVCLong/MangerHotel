@@ -1,26 +1,11 @@
 import {useState} from "react";
 import {addRoom, api} from "../../utils/ApiFunction";
 import Button from "@mui/material/Button";
-import {FormControl, Input, InputAdornment, InputLabel, OutlinedInput, TextField} from "@mui/material";
+import {Alert, FormControl, Input, InputAdornment, InputLabel, OutlinedInput, TextField} from "@mui/material";
 import RoomTypeSelector from "../common/RoomTypeSelector";
+import {Link} from "react-router-dom";
 
 const currencies = [
-    {
-        value: 'USD',
-        label: '$',
-    },
-    {
-        value: 'EUR',
-        label: '€',
-    },
-    {
-        value: 'BTC',
-        label: '฿',
-    },
-    {
-        value: 'JPY',
-        label: '¥',
-    },
     {
         value:'VND',
         label: '₫'
@@ -79,9 +64,8 @@ const AddRoom = () => {
     return (
             <div className="max-w-2xl mx-auto my-10 p-8 bg-white shadow-md rounded-md">
                 <h1 className="text-2xl font-bold mb-6">Add a New Room</h1>
-                {success && (
-                    <div className="alert alert-success fade show"> {success}</div>
-                )}
+                {success && <Alert severity="success" sx={{ mt: 5 }}>{success}</Alert>}
+                {error && <Alert severity="error" sx={{ mt: 5 }}>{error}</Alert>}
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label className="block text-sm font-medium mb-1" htmlFor="room-type">
@@ -125,7 +109,10 @@ const AddRoom = () => {
                                 style={{maxWidth: "400px", maxHeight: "400px"}}
                                 className="mb-3"></img>)}
                     </div>
-                    <Button type="submit" className="w-full">Save Room</Button>
+                    <div className="d-grid gap-2 d-md-flex mt-2">
+                        <Button component={Link} to="/existing-rooms" variant="inline" color="info" >Back</Button>
+                        <Button type="submit" variant="outlined" color="primary" sx={{ml:5}} >Save Room</Button>
+                    </div>
                 </form>
             </div>
         )
