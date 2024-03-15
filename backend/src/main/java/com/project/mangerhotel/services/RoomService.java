@@ -91,8 +91,8 @@ public class RoomService {
 
     //getRoom by id
 
-    public Optional<Room> getRoomById(Long id){
-        return roomRepository.findById(id);
+    public Room getRoomById(Long id){
+        return roomRepository.findById(id).orElse(null);
     }
 
 
