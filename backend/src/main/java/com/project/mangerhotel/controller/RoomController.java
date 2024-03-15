@@ -1,12 +1,13 @@
 package com.project.mangerhotel.controller;
 
+import com.azure.storage.blob.BlobClient;
+import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
 import com.project.mangerhotel.model.Room;
 import com.project.mangerhotel.model.RoomResponse;
 import com.project.mangerhotel.services.AzureService;
 import com.project.mangerhotel.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,16 +15,15 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
+import java.util.UUID;
 
 import static org.springframework.util.MimeTypeUtils.IMAGE_JPEG_VALUE;
 import static org.springframework.util.MimeTypeUtils.IMAGE_PNG_VALUE;
 
 @RestController
-@RequestMapping("/rooms")
+@RequestMapping("/api/v1")
 public class RoomController {
 
     @Autowired
@@ -62,7 +62,6 @@ public class RoomController {
         return ResponseEntity.ok(roomService.updateRoom(id,roomType,roomPrice,file));
     }
 
-
     // get all rooms available from the checkin day to checkout day
 
     @GetMapping("/rooms/available")
@@ -95,6 +94,16 @@ public class RoomController {
     public ResponseEntity<Optional<Room>> getRoomById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(roomService.getRoomById(id));
     }
+
+
+    //[DELETE] room by id
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteRoom(@PathVariable("id") Long id){
+        return ResponseEntity.ok(roomService.deleteRoom(id));
+    }
+
+
 
 
 

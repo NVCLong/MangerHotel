@@ -47,4 +47,13 @@ public class AzureService {
         blobClient.upload(newFile.getInputStream(),newFile.getSize(), true);
         return fileName;
     }
+
+    public void deleteImage(String fileName){
+        BlobClient blobClient=blobContainerClient.getBlobClient(fileName);
+        if(blobClient== null){
+            return;
+        }else{
+            blobClient.deleteIfExists();
+        }
+    }
 }
