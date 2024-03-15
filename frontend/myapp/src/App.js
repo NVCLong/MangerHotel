@@ -11,6 +11,7 @@ import Register from "./page/Register";
 import Navbar from "./component/Navbar";
 import Home from "./page/Home";
 import AddRoom from "./component/room/AddRoom";
+import ExistingRoom from "./component/room/ExistingRoom";
 function App() {
 
   return (
@@ -19,7 +20,8 @@ function App() {
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element={<Register/>} />
             <Route path="/" element={<Home/>} />
-            <Route path="/rooms/add/new-room" element={<AddRoom/>} />
+            <Route path="/existing-room" element={<ExistingRoom/>} />
+            <Route path="/add-room" element={<AddRoom/>} />
         </Routes>
       </BrowserRouter>
   );

@@ -2,6 +2,7 @@ package com.project.mangerhotel.controller;
 
 import com.azure.storage.blob.BlobServiceClient;
 import com.project.mangerhotel.model.Room;
+import com.project.mangerhotel.model.RoomResponse;
 import com.project.mangerhotel.services.AzureService;
 import com.project.mangerhotel.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +83,7 @@ public class RoomController {
 
     // Get All rooms
 
-    @GetMapping("/rooms")
+    @GetMapping("/all-rooms")
     public ResponseEntity<List<Room>> getAllRooms(){
         return ResponseEntity.ok(roomService.getAllRooms());
     }
