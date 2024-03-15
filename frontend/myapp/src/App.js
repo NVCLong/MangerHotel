@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 
 import {
@@ -8,7 +7,6 @@ import {
 } from "react-router-dom";
 import Login from "./page/Login";
 import Register from "./page/Register";
-import Navbar from "./component/Navbar";
 import Home from "./page/Home";
 import AddRoom from "./component/room/AddRoom";
 import ExistingRoom from "./component/room/ExistingRoom";
