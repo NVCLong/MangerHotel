@@ -15,15 +15,19 @@ import ExistingRoom from "./component/room/ExistingRoom";
 function App() {
 
   return (
-      <BrowserRouter>
-        <Routes>
-            <Route path="/login" element={<Login/>} />
-            <Route path="/register" element={<Register/>} />
-            <Route path="/" element={<Home/>} />
-            <Route path="/existing-room" element={<ExistingRoom/>} />
-            <Route path="/add-room" element={<AddRoom/>} />
-        </Routes>
-      </BrowserRouter>
+      <>
+          <main>
+              <BrowserRouter>
+                <Routes>
+                    <Route path="/login" element={<Login/>} />
+                    <Route path="/register" element={<Register/>} />
+                    <Route path="/" element={<Home/>} />
+                    <Route path="/existing-room" element={<ExistingRoom/>} />
+                    <Route path="/add-room" element={<AddRoom/>} />
+                </Routes>
+              </BrowserRouter>
+          </main>
+      </>
   );
 }
 

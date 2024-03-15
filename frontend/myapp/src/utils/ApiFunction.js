@@ -67,3 +67,12 @@ export async function updateRooms(roomID, roomData){
 
     return response
 }
+
+export async function getRoomByID(roomID){
+    try {
+        const response = await api.get(`/rooms/room/${roomID}`);
+        return response.data;
+    }catch (error){
+        throw new Error("Error fetching room")
+    }
+}
