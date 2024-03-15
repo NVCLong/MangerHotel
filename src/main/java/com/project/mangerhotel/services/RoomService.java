@@ -1,30 +1,18 @@
 package com.project.mangerhotel.services;
 
-import com.azure.storage.blob.BlobClient;
 import com.project.mangerhotel.model.BookedRoom;
 import com.project.mangerhotel.model.Room;
-import com.project.mangerhotel.model.RoomResponse;
+import com.project.mangerhotel.repositories.BookingRepository;
 import com.project.mangerhotel.repositories.RoomRepository;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 
 @Service
@@ -34,6 +22,10 @@ public class RoomService {
 
     @Autowired
     AzureService azureService;
+
+    @Autowired
+    BookingRepository bookingRepository;
+
 
     public Room addNewRoom(String roomType, BigDecimal roomPrice, String fileName) throws SQLException, IOException {
         Room newRoom = new Room();
@@ -61,6 +53,22 @@ public class RoomService {
     }
 
     //delete rooms
+
+
+    public String deleteRoom(Long id){
+        Room room=roomRepository.findById(id).orElseThrow(null);
+        azureService.deleteImage(room.getPhoto());
+        BookedRoom bookedRoom= bookingRepository.findByRoom(room).orElse(null);
+        if(room==null){
+            return "Failed to delete room";
+        }else{
+            roomRepository.delete(room);
+            if(bookedRoom!= null){
+                bookingRepository.deleteBookedRoomByRoom(room);
+            }
+            return "Room deleted";
+        }
+    }
 
 
 
