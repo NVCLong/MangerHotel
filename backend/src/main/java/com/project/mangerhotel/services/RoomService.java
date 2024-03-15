@@ -21,10 +21,7 @@ import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 @Service
@@ -76,6 +73,11 @@ public class RoomService {
         return  rooms;
     }
 
+    //getRoom by id
+
+    public Optional<Room> getRoomById(Long id){
+        return roomRepository.findById(id);
+    }
 
 
 }

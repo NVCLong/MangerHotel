@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.util.MimeTypeUtils.IMAGE_JPEG_VALUE;
 import static org.springframework.util.MimeTypeUtils.IMAGE_PNG_VALUE;
@@ -89,6 +90,10 @@ public class RoomController {
     }
 
 
+    @GetMapping("/room/{id}")
+    public ResponseEntity<Optional<Room>> getRoomById(@PathVariable("id") Long id){
+        return ResponseEntity.ok(roomService.getRoomById(id));
+    }
 
 
 
