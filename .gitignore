@@ -31,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+frontend/myapp/node_modules/.cache/
