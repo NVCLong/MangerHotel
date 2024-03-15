@@ -62,6 +62,7 @@ public class RoomController {
         return ResponseEntity.ok(roomService.updateRoom(id,roomType,roomPrice,file));
     }
 
+
     // get all rooms available from the checkin day to checkout day
 
     @GetMapping("/rooms/available")
@@ -91,8 +92,17 @@ public class RoomController {
 
 
     @GetMapping("/room/{id}")
-    public ResponseEntity<Optional<Room>> getRoomById(@PathVariable("id") Long id){
+    public ResponseEntity<Optional<Room>> getRoomById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(roomService.getRoomById(id));
+    }
+    @GetMapping("/rooms/available")
+    public ResponseEntity<List<Room>> getAllAvailableRooms(){
+        return  ResponseEntity.ok(roomService.geAllAvailableRoom());
+    }
+
+    @GetMapping("/rooms/booked")
+    public ResponseEntity<List<Room>> getAllBookedRooms(){
+        return ResponseEntity.ok(roomService.getAllBookingRoom());
     }
 
 

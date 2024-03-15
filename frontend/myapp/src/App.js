@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import logo from './logo.svg';
+>>>>>>> f752a5b3e6a4457bbd309b48f240c7e2d070380e
 import './App.css';
 
 import {
