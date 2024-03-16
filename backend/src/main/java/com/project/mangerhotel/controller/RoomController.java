@@ -8,6 +8,7 @@ import com.project.mangerhotel.model.RoomResponse;
 import com.project.mangerhotel.services.AzureService;
 import com.project.mangerhotel.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,9 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.util.*;
 
 import static org.springframework.util.MimeTypeUtils.IMAGE_JPEG_VALUE;
 import static org.springframework.util.MimeTypeUtils.IMAGE_PNG_VALUE;
@@ -86,6 +86,7 @@ public class RoomController {
 
     @GetMapping("/all-rooms")
     public ResponseEntity<List<Room>> getAllRooms(){
+        System.out.println("Get all rooms");
         return ResponseEntity.ok(roomService.getAllRooms());
     }
 

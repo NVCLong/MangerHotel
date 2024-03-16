@@ -33,7 +33,7 @@ export default function Login(){
                 email:email,
                 password:password
             }
-            const response= await axios.post("http://localhost:8080/api/v1/auth/register",user)
+            const response= await axios.post("http://localhost:8080/api/v1/auth/signin",user)
             console.log(response.data)
             localStorage.setItem("access_token",response.data.access_token);
             document.cookie=`refresh_token=${response.data.refresh_token}`

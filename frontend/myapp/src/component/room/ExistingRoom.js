@@ -29,6 +29,7 @@ const ExistingRoom = () => {
         setIsLoading(true);
         try {
             const response = await getAllRooms();
+            console.log(response);
             setRooms(response);
 
             setIsLoading(false);
@@ -93,13 +94,13 @@ const ExistingRoom = () => {
             {isLoading ? (
                 <Typography>Loading existing rooms</Typography>
             ) : (
-                <Box sx={{ mt: 5, mb: 5 }}>
-                    <Grid container justifyContent="space-between" sx={{ mb: 3, mt: 5 }}>
+                <Box sx={{ mt: 5, mb: 5, p: 3 }}>
+                    <Grid container justifyContent="center" sx={{ mb: 3, mt: 5 }}>
                         <Typography variant="h2">Existing Rooms</Typography>
                     </Grid>
 
                     <Grid container>
-                        <Grid item md={6} sx={{ mb: 2 }}>
+                        <Grid item md={6} sx={{ mb: 2, p: 5 }}>
                             <RoomFilter data={rooms} setFilterData={setFilterRooms} />
                         </Grid>
 
@@ -129,14 +130,22 @@ const ExistingRoom = () => {
                                         <TableCell>{room.roomPrice}</TableCell>
                                         <TableCell>
                                             <Link to={`/edit-room/${room.id}`}>
-                                                <Button color="info" size="small">
+                                                <Button
+                                                    sx={{ bgcolor: 'info.main', color: 'white', '&:hover': {
+                                                            backgroundColor: 'info.dark',
+                                                        } }}
+                                                    size="small"
+                                                >
                                                     <Visibility />
                                                 </Button>
-                                                <Button color="warning" size="small">
+                                                <Button sx={{ bgcolor: 'warning.main', color: 'white', '&:hover': {
+                                                        backgroundColor: 'warning.dark',
+                                                    }, }} size="small">
                                                     <Edit />
                                                 </Button>
                                             </Link>
-                                            <Button color="error" size="small" onClick={() => handleDeleteRoom(room.id)}>
+                                            <Button sx={{ bgcolor: 'error.main', color: 'white', '&:hover': {
+                                                    backgroundColor: 'error.dark'} }} size="small" onClick={() => handleDeleteRoom(room.id)}>
                                                 <Delete />
                                             </Button>
                                         </TableCell>

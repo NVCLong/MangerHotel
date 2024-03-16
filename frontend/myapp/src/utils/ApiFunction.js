@@ -1,10 +1,9 @@
 import axios from "axios";
 
 export const getHeaders = () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("access_token");
     return {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${token}`
     }
 
 }
@@ -21,13 +20,13 @@ export async function addRoom(roomType, roomPrice, images)
     formData.append("roomPrice", roomPrice);
     formData.append("image", images);
 
-    const response = await api.post("/rooms/add/new-room", formData);
+    const response = await api.post("/api/v1/add/new-room", formData);
     return response.status === 201;
 }
 
 export async function getRoomsType( ){
     try{
-        const response = await api.get("/rooms/room-types");
+        const response = await api.get("/api/v1/room-types");
         return response.data;
     }catch (error){
         throw new Error("Error fetching room types")
@@ -36,7 +35,11 @@ export async function getRoomsType( ){
 
 export async function getAllRooms(){
     try {
-        const response = await api.get("/rooms/all-rooms");
+        const response = await api.get("/api/v1/all-rooms", {
+            headers: getHeaders()
+        });
+
+        console.log("This is the response data" + response.data);
         return response.data;
     }catch (error){
         throw new Error("Error fetching rooms")
@@ -45,7 +48,7 @@ export async function getAllRooms(){
 
 export async function deleteRoom(roomID){
     try {
-        const response = await api.delete(`/rooms/delete/room/${roomID}`, {
+        const response = await api.delete(`/api/v1/delete/room/${roomID}`, {
             headers: getHeaders()
         });
 
@@ -61,7 +64,7 @@ export async function updateRooms(roomID, roomData){
     formData.append("roomPrice", roomData.roomPrice);
     formData.append("image", roomData.images);
 
-    const response = await api.put(`/rooms/edit/room/${roomID}`, formData,{
+    const response = await api.put(`/api/v1/edit/room/${roomID}`, formData,{
         headers: getHeaders()
     });
 
@@ -70,7 +73,7 @@ export async function updateRooms(roomID, roomData){
 
 export async function getRoomByID(roomID){
     try {
-        const response = await api.get(`/rooms/room/${roomID}`);
+        const response = await api.get(`/api/v1/room/${roomID}`);
         return response.data;
     }catch (error){
         throw new Error("Error fetching room")

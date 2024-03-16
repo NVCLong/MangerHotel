@@ -8,7 +8,7 @@ const Footer = () => {
             <Grid container>
                 <Grid item xs={12} md={12}>
                     <Typography align="center" variant="body1">
-                        &copy; {today.getFullYear()} Hotel Saigon
+                        &copy; {today.getFullYear()} CAO LONG Resort & Hotel. Your comfort is our priority.
                     </Typography>
                 </Grid>
             </Grid>
