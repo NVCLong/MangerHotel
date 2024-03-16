@@ -5,11 +5,14 @@ import {Divider, FormControl, FormHelperText, MenuItem, OutlinedInput, Tooltip} 
 import { Link } from 'react-router-dom'; // Assuming you're using React Router for routing
 
 export default function Navbar() {
-    const [account, setAccount] = useState('');
+    const [showAccount, setShowAccount] = useState(false);
 
-    const handleChange = (event) => {
-        setAccount(event.target.value);
-    };
+    const handleAccountClick = () => {
+        setShowAccount(!showAccount)
+    }
+
+    const isLoggedIn = localStorage.getItem("token")
+
     return (
         <nav className="bg-white shadow">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -27,26 +30,38 @@ export default function Navbar() {
                     </div>
                     <div className="hidden sm:flex items-center">
                         <Tooltip title="">
-                            <Button component={Link} to={"/find-booking"} className="text-gray-500 bg-gradient-to-br from-pink-200 to-pink-400 focus:outline-none focus:text-white focus:bg-gray-50 transition duration-150 ease-in-out" variant="contained" size="small">
+                            <Button component={Link} to={"/find-booking"}
+                                    className="text-gray-500 bg-gradient-to-br from-pink-200 to-pink-400 focus:outline-none focus:text-white focus:bg-gray-50 transition duration-150 ease-in-out"
+                                    variant="contained" size="small">
                                 Find my booking
                             </Button>
                         </Tooltip>
-                        <FormControl sx={{ m: 1, minWidth: 100 }} size="small">
-                            <Select
-                                value={account}
-                                onChange={handleChange}
-                                displayEmpty
-                                inputProps={{ 'aria-label': 'Without label' }}
-                            >
-                                <MenuItem component={Link} to="/account" value="">
-                                    <em>Account</em>
-                                </MenuItem>
-                                <MenuItem component={Link} to="/login" value="">Login</MenuItem>
-                                <MenuItem component={Link} to="/profile" value="">Profile</MenuItem>
-                                <Divider />
-                                <MenuItem component={Link} to="/logout" value="">Logout</MenuItem>
-                            </Select>
-                        </FormControl>
+                        <li className="nav-item dropdown">
+                            <a
+                                className={`nav-link dropdown-toggle ${showAccount ? "show" : ""}`}
+                                href="#"
+                                role="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                onClick={handleAccountClick}>
+                                {" "}
+                                Account
+                            </a>
+
+                            <ul
+                                className={`dropdown-menu ${showAccount ? "show" : ""}`}
+                                aria-labelledby="navbarDropdown">
+                                {isLoggedIn ? (
+                                    <h1>Logout</h1>
+                                ) : (
+                                    <li>
+                                        <Link className="dropdown-item" to={"/login"}>
+                                            Login
+                                        </Link>
+                                    </li>
+                                )}
+                            </ul>
+                        </li>
                     </div>
                 </div>
             </div>

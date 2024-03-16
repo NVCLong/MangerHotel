@@ -19,7 +19,9 @@ export async function addRoom(roomType, roomPrice, images)
 
     formData.append("roomType", roomType);
     formData.append("roomPrice", roomPrice);
-    formData.append("image", images);
+
+    //up ten chu ko up hinh
+    formData.append("images", images);
 
     const response = await api.post("/api/v1/add/new_room", formData,{
         headers: getHeaders()
@@ -63,6 +65,7 @@ export async function deleteRoom(roomID){
 
 export async function updateRooms(roomID, roomData){
     const formData = new FormData();
+    formData.append("id", roomID)
     formData.append("roomType", roomData.roomType);
     formData.append("roomPrice", roomData.roomPrice);
     formData.append("image", roomData.images);
