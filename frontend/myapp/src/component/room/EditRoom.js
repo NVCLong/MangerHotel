@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {addRoom, getRoomByID, updateRooms} from "../../utils/ApiFunction";
-import {Link, useParams} from "react-router-dom";
+import {Link, useLocation, useParams} from "react-router-dom";
 import RoomTypeSelector from "../common/RoomTypeSelector";
 import {Alert, Box, InputAdornment, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
@@ -16,7 +16,8 @@ const EditRoom = () => {
     const [success, setSuccess] = useState("");
     const [imagesPreview, setImagesPreview] = useState("");
 
-    const {roomID} = useParams();
+    const query = new URLSearchParams(useLocation().search);
+    const roomID = query.get('id');
 
     useEffect(() => {
         const fetchRoom = async () => {

@@ -57,7 +57,7 @@ const ExistingRoom = () => {
     const handleDeleteRoom =async (roomID) => {
         try{
             const response = await deleteRoom(roomID);
-            if (response.status === 200){
+            if (response === ""){
                 setSuccess("Room deleted successfully");
                 setError("");
                 fetchRooms();
@@ -129,7 +129,7 @@ const ExistingRoom = () => {
                                         <TableCell>{room.roomType}</TableCell>
                                         <TableCell>{room.roomPrice}</TableCell>
                                         <TableCell>
-                                            <Link to={`/edit-room/${room.id}`}>
+                                            <Link to={`/edit-room?id=${room.id}`}>
                                                 <Button
                                                     sx={{ bgcolor: 'info.main', color: 'white', '&:hover': {
                                                             backgroundColor: 'info.dark',

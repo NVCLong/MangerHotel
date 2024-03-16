@@ -3,7 +3,8 @@ import axios from "axios";
 export const getHeaders = () => {
     const token = localStorage.getItem("access_token");
     return {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
     }
 
 }
@@ -20,7 +21,9 @@ export async function addRoom(roomType, roomPrice, images)
     formData.append("roomPrice", roomPrice);
     formData.append("image", images);
 
-    const response = await api.post("/api/v1/add/new-room", formData);
+    const response = await api.post("/api/v1/add/new_room", formData,{
+        headers: getHeaders()
+    });
     return response.status === 201;
 }
 
@@ -48,11 +51,11 @@ export async function getAllRooms(){
 
 export async function deleteRoom(roomID){
     try {
-        const response = await api.delete(`/api/v1/delete/room/${roomID}`, {
+        const response = await api.delete(`/api/v1/delete/${roomID}`, {
             headers: getHeaders()
         });
 
-        return response;
+        return response.data;
     }catch (error){
         throw new Error("Error deleting room")
     }
@@ -73,7 +76,10 @@ export async function updateRooms(roomID, roomData){
 
 export async function getRoomByID(roomID){
     try {
-        const response = await api.get(`/api/v1/room/${roomID}`);
+        const response = await api.get(`/api/v1/room/${roomID}`,{
+            headers: getHeaders()
+
+        });
         return response.data;
     }catch (error){
         throw new Error("Error fetching room")
