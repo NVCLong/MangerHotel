@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const getHeaders = () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("access_token");
     return {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json"
@@ -10,7 +10,7 @@ export const getHeaders = () => {
 }
 
 export const api = axios.create({
-    baseURL: "http://localhost:8080"
+    baseURL: "http://localhost:8080/api/v1"
 })
 
 export async function addRoom(roomType, roomPrice, images)
@@ -21,13 +21,17 @@ export async function addRoom(roomType, roomPrice, images)
     formData.append("roomPrice", roomPrice);
     formData.append("image", images);
 
-    const response = await api.post("/rooms/add/new-room", formData);
+    const response = await api.post("/rooms/add/new-room", formData,{
+        headers: getHeaders()
+    });
     return response.status === 201;
 }
 
 export async function getRoomsType( ){
     try{
-        const response = await api.get("/rooms/room-types");
+        const response = await api.get("/rooms/room-types",{
+            headers: getHeaders()
+        });
         return response.data;
     }catch (error){
         throw new Error("Error fetching room types")
@@ -36,7 +40,9 @@ export async function getRoomsType( ){
 
 export async function getAllRooms(){
     try {
-        const response = await api.get("/rooms/all-rooms");
+        const response = await api.get("/all-rooms",{
+            headers: getHeaders()
+        });
         return response.data;
     }catch (error){
         throw new Error("Error fetching rooms")
@@ -70,7 +76,9 @@ export async function updateRooms(roomID, roomData){
 
 export async function getRoomByID(roomID){
     try {
-        const response = await api.get(`/rooms/room/${roomID}`);
+        const response = await api.get(`/rooms/room/${roomID}`,{
+            headers: getHeaders()
+        });
         return response.data;
     }catch (error){
         throw new Error("Error fetching room")
