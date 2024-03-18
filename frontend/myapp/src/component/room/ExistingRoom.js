@@ -92,7 +92,7 @@ const ExistingRoom = () => {
             </Box>
 
             {isLoading ? (
-                <Typography>Loading existing rooms</Typography>
+                <div>Loading rooms.....</div>
             ) : (
                 <Box sx={{ mt: 5, mb: 5, p: 3 }}>
                     <Grid container justifyContent="center" sx={{ mb: 3, mt: 5 }}>

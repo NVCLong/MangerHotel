@@ -44,7 +44,7 @@ export async function getAllRooms(){
             headers: getHeaders()
         });
 
-        console.log("This is the response data" + response.data);
+        console.log("This is the response data" + response);
         return response.data;
     }catch (error){
         throw new Error("Error fetching rooms")

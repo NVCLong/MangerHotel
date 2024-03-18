@@ -36,32 +36,27 @@ export default function Navbar() {
                                 Find my booking
                             </Button>
                         </Tooltip>
-                        <li className="nav-item dropdown">
-                            <a
-                                className={`nav-link dropdown-toggle ${showAccount ? "show" : ""}`}
-                                href="#"
-                                role="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                                onClick={handleAccountClick}>
-                                {" "}
-                                Account
-                            </a>
-
-                            <ul
-                                className={`dropdown-menu ${showAccount ? "show" : ""}`}
-                                aria-labelledby="navbarDropdown">
-                                {isLoggedIn ? (
-                                    <h1>Logout</h1>
-                                ) : (
-                                    <li>
-                                        <Link className="dropdown-item" to={"/login"}>
-                                            Login
-                                        </Link>
-                                    </li>
-                                )}
-                            </ul>
-                        </li>
+                        <FormControl sx={{ m: 1, minWidth: 100 }} size="small">
+                            <Select
+                                value="Account"
+                                onClick={handleAccountClick}
+                                display={`${showAccount ? "Account" : "profile"}`}
+                                inputProps={{ 'aria-label': 'Without label' }}
+                            >
+                                <MenuItem component={Link} to="/account" value="Account">
+                                    <em>Account</em>
+                                </MenuItem>
+                                { !isLoggedIn ? (
+                                    <MenuItem component={Link} to="/login" value="">Login</MenuItem>):(
+                                    <>
+                                    <MenuItem component={Link} to="/profile" value="profile">Profile</MenuItem>
+                                    <Divider />
+                                    <MenuItem component={Link} to="/logout" value="">Logout</MenuItem>
+                                    </>
+                                    )
+                                }
+                            </Select>
+                        </FormControl>
                     </div>
                 </div>
             </div>

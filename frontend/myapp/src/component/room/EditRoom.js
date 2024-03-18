@@ -9,12 +9,12 @@ const EditRoom = () => {
     const[room, setRoom] = useState({
         roomType: "",
         roomPrice: "",
-        images: "",
+        photo: "",
     });
 
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
-    const [imagesPreview, setImagesPreview] = useState("");
+    const [imagesPreview, setImagesPreview] = useState();
 
     const query = new URLSearchParams(useLocation().search);
     const roomID = query.get('id');
@@ -24,7 +24,7 @@ const EditRoom = () => {
             try {
                 const response = await getRoomByID(roomID);
                 setRoom(response);
-                setImagesPreview(response.images);
+                setImagesPreview(`http://localhost:8080/api/v1/photo/${response.photo}`);
             }catch (error){
                 console.log(error.message);
             }

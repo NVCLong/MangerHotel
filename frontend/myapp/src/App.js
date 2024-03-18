@@ -14,6 +14,7 @@ import ExistingRoom from "./component/room/ExistingRoom";
 import EditRoom from "./component/room/EditRoom";
 import Navbar from "./component/layout/Navbar";
 import Footer from "./component/layout/Footer";
+import RoomListing from "./component/room/RoomListing";
 function App() {
 
   return (
@@ -28,6 +29,7 @@ function App() {
                     <Route path="/existing-room" element={<ExistingRoom/>} />
                     <Route path="/add-room" element={<AddRoom/>} />
                     <Route path="/edit-room" element={<EditRoom/>} />
+                    <Route path="/browse-all-room" element={<RoomListing/>} />
                 </Routes>
               </BrowserRouter>
               <Footer/>
