@@ -126,6 +126,22 @@ public class AuthenticationService {
             }
         }
     }
+
+    public AuthenticationResponse signUpWithOauth2(RegisterRequest registrationRequest){
+        UserEntity user= UserEntity.builder()
+                .userName(registrationRequest.getUserName())
+                .password(passwordEncoder.encode(registrationRequest.getPassword()))
+                .email(registrationRequest.getEmail())
+                .build();
+        UserEntity userEntity= userRepository.save(user);
+        String accessToken= jwtService.generateToken(userEntity);
+        String refreshToken = jwtService.generateRefreshToken(userEntity);
+        saveUserToken(userEntity,accessToken);
+        return  AuthenticationResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
 }
 
 
