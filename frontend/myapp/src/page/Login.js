@@ -1,6 +1,7 @@
 import {useState} from "react";
 import{useNavigate} from "react-router-dom";
 import axios from "axios";
+import {GoogleLogin, GoogleOAuthProvider} from '@react-oauth/google';
 
 
 export default function Login(){
@@ -49,7 +50,7 @@ export default function Login(){
                         <h1 className="text-5xl font-semibold"> Welcome back</h1>
                         <p className="font-medium text-lg text-gray-500 mt-4"> Welcome back! Please enter your
                             details</p>
-                        <form className="mt-8" >
+                        <form className="mt-8">
                             <div className="mb-2">
                                 <label className="text-lg font-medium "> Email </label>
                                 <input className="w-full border-2 border-gray-100 rounded-xl p-4 mt-3 bg-transparent"
@@ -80,6 +81,18 @@ export default function Login(){
                                 > Login
                                 </button>
                             </div>
+                            <div className="mt-8 flex flex-col gap-y-4">
+                                <GoogleOAuthProvider clientId="470811894525-b7sf673t32ebqtscushm04sloifpqigv.apps.googleusercontent.com">
+                                <GoogleLogin
+                                    onSuccess={credentialResponse => {
+                                        console.log(credentialResponse.credential);
+                                    }}
+                                    onError={() => {
+                                        console.log('Login Failed');
+                                    }}
+                                />
+                                </GoogleOAuthProvider>;
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -88,6 +101,6 @@ export default function Login(){
                         className="w-60 h-60 bg-gradient-to-tr from-red-300 to-pink-500 rounded-full animate-bounce"></div>
                     <div className="w-full h-1/2 absolute bg-white/10 backdrop-blur-lg"></div>
                 </div>
-        </div>
+            </div>
     )
 }
