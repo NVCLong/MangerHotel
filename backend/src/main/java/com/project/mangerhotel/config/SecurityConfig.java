@@ -33,7 +33,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/photo/**").permitAll()
                         .requestMatchers("/api/v1/delete/**").permitAll()
-                        .requestMatchers("/api/v1/**").permitAll()
+                        .requestMatchers("/bookings/**").permitAll()
                         .anyRequest().authenticated()
                 ).sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

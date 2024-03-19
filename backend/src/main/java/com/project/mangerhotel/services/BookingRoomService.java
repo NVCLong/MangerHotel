@@ -4,6 +4,7 @@ import com.project.mangerhotel.exception.InvalidBookingRequestException;
 import com.project.mangerhotel.model.BookedRoom;
 import com.project.mangerhotel.model.Room;
 import com.project.mangerhotel.repositories.BookingRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +12,10 @@ import java.util.List;
 @Service
 public class BookingRoomService {
 
+    @Autowired
     private BookingRepository bookingRepository;
+
+    @Autowired
     private RoomService roomService;
 
 
@@ -27,7 +31,7 @@ public class BookingRoomService {
     }
 
     public void cancelBooking(Long id){
-        return;
+        bookingRepository.deleteById(id);
     }
 
     public String saveBooking(Long roomID, BookedRoom bookingRequest){
@@ -47,8 +51,10 @@ public class BookingRoomService {
         return bookingRequest.getBookingConfirmationCode();
     }
 
-    public List<BookedRoom> findingBookingConfirmationCode(String confirmationCode){
-        return null;
+    public BookedRoom findingBookingConfirmationCode(String confirmationCode){
+          return bookingRepository.findByBookingConfirmationCode(confirmationCode)
+                  .orElseThrow(() ->
+                    new InvalidBookingRequestException("Booking not found the confirmation code provided"));
     }
 
     // check if the room is available for checkout checkin date
