@@ -142,6 +142,21 @@ public class AuthenticationService {
                 .refreshToken(refreshToken)
                 .build();
     }
+
+
+    public AuthenticationResponse signInWithOAuth2(AuthenticationRequest authenticationRequest){
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),authenticationRequest.getPassword()));
+        UserEntity user= userRepository.findByEmail(authenticationRequest.getEmail()).orElse(null);
+
+        String access_token= jwtService.generateToken(user);
+        String refreshToken= jwtService.generateRefreshToken(user);
+        saveUserToken(user,access_token);
+
+        return AuthenticationResponse.builder()
+                .accessToken(access_token)
+                .refreshToken(refreshToken)
+                .build();
+    }
 }
 
 

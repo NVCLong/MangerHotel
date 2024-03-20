@@ -67,8 +67,12 @@ public class AuthenController {
                 .build();
         return ResponseEntity.ok(authenticationService.signUpWithOauth2(registerRequest));
     }
-    @GetMapping("/oauth2/register/fail")
-    public Map<String, Object> registerFailWithOauth2(){
-        return null;
+    @GetMapping("/oauth2/signin")
+    public ResponseEntity<AuthenticationResponse> loginWithOauth2(@RequestParam("email") String email,@RequestParam("name") String name ){
+        AuthenticationRequest registerRequest= AuthenticationRequest.builder()
+                .email(email)
+                .password(name)
+                .build();
+        return ResponseEntity.ok(authenticationService.signInWithOAuth2(registerRequest));
     }
 }
