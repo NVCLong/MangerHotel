@@ -132,6 +132,7 @@ public class AuthenticationService {
                 .userName(registrationRequest.getUserName())
                 .password(passwordEncoder.encode(registrationRequest.getPassword()))
                 .email(registrationRequest.getEmail())
+                .role(Role.USER)
                 .build();
         UserEntity userEntity= userRepository.save(user);
         String accessToken= jwtService.generateToken(userEntity);
