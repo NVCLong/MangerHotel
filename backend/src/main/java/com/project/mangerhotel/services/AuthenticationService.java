@@ -145,6 +145,15 @@ public class AuthenticationService {
 
 
     public AuthenticationResponse signInWithOAuth2(AuthenticationRequest authenticationRequest){
+        if(userRepository.findByEmail(authenticationRequest.getEmail()).isEmpty()){
+            RegisterRequest registerRequest = RegisterRequest.builder()
+                            .email(authenticationRequest.getEmail())
+                                    .userName(authenticationRequest.getPassword())
+                                            .password(authenticationRequest.getPassword())
+                                                    .build();
+
+            return  signUpWithOauth2(registerRequest);
+        }
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),authenticationRequest.getPassword()));
         UserEntity user= userRepository.findByEmail(authenticationRequest.getEmail()).orElse(null);
 
