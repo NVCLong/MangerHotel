@@ -13,5 +13,7 @@ public interface BookingRepository extends JpaRepository<BookedRoom,Long> {
 
     Optional<BookedRoom> deleteBookedRoomByRoom(Room room);
 
+    Optional<BookedRoom> findByBookingConfirmationCode(String confirmationCode);
+
     Optional<BookedRoom> findByRoom(Room room);
 }

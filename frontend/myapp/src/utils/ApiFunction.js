@@ -10,7 +10,7 @@ export const getHeaders = () => {
 }
 
 export const api = axios.create({
-    baseURL: "http://localhost:8080/api/v1"
+    baseURL: "http://localhost:8080"
 })
 
 export async function addRoom(roomType, roomPrice, images)
@@ -19,9 +19,11 @@ export async function addRoom(roomType, roomPrice, images)
 
     formData.append("roomType", roomType);
     formData.append("roomPrice", roomPrice);
-    formData.append("image", images);
 
-    const response = await api.post("/rooms/add/new-room", formData,{
+    //up ten chu ko up hinh
+    formData.append("images", images);
+
+    const response = await api.post("/api/v1/add/new_room", formData,{
         headers: getHeaders()
     });
     return response.status === 201;
@@ -29,9 +31,7 @@ export async function addRoom(roomType, roomPrice, images)
 
 export async function getRoomsType( ){
     try{
-        const response = await api.get("/rooms/room-types",{
-            headers: getHeaders()
-        });
+        const response = await api.get("/api/v1/room-types");
         return response.data;
     }catch (error){
         throw new Error("Error fetching room types")
@@ -40,9 +40,11 @@ export async function getRoomsType( ){
 
 export async function getAllRooms(){
     try {
-        const response = await api.get("/all-rooms",{
+        const response = await api.get("/api/v1/all-rooms", {
             headers: getHeaders()
         });
+
+        console.log("This is the response data" + response);
         return response.data;
     }catch (error){
         throw new Error("Error fetching rooms")
@@ -51,11 +53,11 @@ export async function getAllRooms(){
 
 export async function deleteRoom(roomID){
     try {
-        const response = await api.delete(`/rooms/delete/room/${roomID}`, {
+        const response = await api.delete(`/api/v1/delete/${roomID}`, {
             headers: getHeaders()
         });
 
-        return response;
+        return response.data;
     }catch (error){
         throw new Error("Error deleting room")
     }
@@ -63,11 +65,12 @@ export async function deleteRoom(roomID){
 
 export async function updateRooms(roomID, roomData){
     const formData = new FormData();
+    formData.append("id", roomID)
     formData.append("roomType", roomData.roomType);
     formData.append("roomPrice", roomData.roomPrice);
     formData.append("image", roomData.images);
 
-    const response = await api.put(`/rooms/edit/room/${roomID}`, formData,{
+    const response = await api.put(`/api/v1/edit/room/${roomID}`, formData,{
         headers: getHeaders()
     });
 
@@ -76,8 +79,9 @@ export async function updateRooms(roomID, roomData){
 
 export async function getRoomByID(roomID){
     try {
-        const response = await api.get(`/rooms/room/${roomID}`,{
+        const response = await api.get(`/api/v1/room/${roomID}`,{
             headers: getHeaders()
+
         });
         return response.data;
     }catch (error){

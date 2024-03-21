@@ -219,3 +219,7 @@ code {
   height: 60px;
   text-align: center;
 }
+
+.room-card {
+  margin: 3px;
+}
