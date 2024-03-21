@@ -90,8 +90,10 @@ export default function Login(){
 
                                         const decoded = jwtDecode(credentialResponse.credential);
                                         console.log(decoded.family_name);
-                                        const response=await axios.get(`http://localhost:8080/api/v1/auth/oauth2/register?email=${decoded.email}&name=${decoded.family_name}`)
-                                        console.log(response.data);
+                                        const response=await axios.get(`http://localhost:8080/api/v1/auth/oauth2/signin?email=${decoded.email}&name=${decoded.family_name}`)
+                                        localStorage.setItem("access_token",response.data.access_token);
+                                        document.cookie=`refresh_token=${response.data.refresh_token}`
+                                        navigator('/')
                                     }}
                                     onError={() => {
                                         console.log('Login Failed');

@@ -2,6 +2,9 @@ import {useState} from "react";
 import {flushSync} from "react-dom";
 import{useNavigate} from "react-router-dom";
 import  axios from "axios"
+import {GoogleLogin, GoogleOAuthProvider} from '@react-oauth/google';
+import {act} from "react-dom/test-utils";
+import { jwtDecode } from "jwt-decode";
 export  default  function Register(){
     const [userName, setUsername]= useState("")
     const [password, setPassword]= useState("")
@@ -72,6 +75,24 @@ export  default  function Register(){
                                 onClick={handleSubmit}
                             > Sign up
                             </button>
+                        </div>
+                        <div className="mt-8 flex flex-col gap-y-4">
+                            <GoogleOAuthProvider clientId="470811894525-b7sf673t32ebqtscushm04sloifpqigv.apps.googleusercontent.com">
+                                <GoogleLogin
+                                    onSuccess={async credentialResponse => {
+
+                                        const decoded = jwtDecode(credentialResponse.credential);
+                                        console.log(decoded.family_name);
+                                        const response=await axios.get(`http://localhost:8080/api/v1/auth/oauth2/register?email=${decoded.email}&name=${decoded.family_name}`)
+                                        localStorage.setItem("access_token",response.data.access_token);
+                                        document.cookie=`refresh_token=${response.data.refresh_token}`
+                                        navigator('/')
+                                    }}
+                                    onError={() => {
+                                        console.log('Login Failed');
+                                    }}
+                                />
+                            </GoogleOAuthProvider>;
                         </div>
                     </form>
                 </div>
