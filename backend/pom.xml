@@ -148,6 +148,11 @@
             <artifactId>google-oauth-client</artifactId>
             <version>1.35.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>annotationProcessor</scope>
+        </dependency>
 
 
     </dependencies>
