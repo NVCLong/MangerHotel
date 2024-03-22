@@ -126,6 +126,47 @@ public class AuthenticationService {
             }
         }
     }
+
+    public AuthenticationResponse signUpWithOauth2(RegisterRequest registrationRequest){
+        UserEntity user= UserEntity.builder()
+                .userName(registrationRequest.getUserName())
+                .password(passwordEncoder.encode(registrationRequest.getPassword()))
+                .email(registrationRequest.getEmail())
+                .role(Role.USER)
+                .build();
+        UserEntity userEntity= userRepository.save(user);
+        String accessToken= jwtService.generateToken(userEntity);
+        String refreshToken = jwtService.generateRefreshToken(userEntity);
+        saveUserToken(userEntity,accessToken);
+        return  AuthenticationResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
+
+
+    public AuthenticationResponse signInWithOAuth2(AuthenticationRequest authenticationRequest){
+        if(userRepository.findByEmail(authenticationRequest.getEmail()).isEmpty()){
+            RegisterRequest registerRequest = RegisterRequest.builder()
+                            .email(authenticationRequest.getEmail())
+                                    .userName(authenticationRequest.getPassword())
+                                            .password(authenticationRequest.getPassword())
+                                                    .build();
+
+            return  signUpWithOauth2(registerRequest);
+        }
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),authenticationRequest.getPassword()));
+        UserEntity user= userRepository.findByEmail(authenticationRequest.getEmail()).orElse(null);
+
+        String access_token= jwtService.generateToken(user);
+        String refreshToken= jwtService.generateRefreshToken(user);
+        saveUserToken(user,access_token);
+
+        return AuthenticationResponse.builder()
+                .accessToken(access_token)
+                .refreshToken(refreshToken)
+                .build();
+    }
 }
 
 

@@ -39,7 +39,7 @@ public class BookingRoomService {
             throw new InvalidBookingRequestException("Must choose a check out date after check in date");
         }
 
-        Room room = roomService.getRoomById(roomID).get();
+        Room room = roomService.getRoomById(roomID);
         List<BookedRoom> existingBookings = room.getBookings();
         boolean isRoomAvailable = isRoomAvailable(bookingRequest, existingBookings);
         if(isRoomAvailable){

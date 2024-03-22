@@ -10,6 +10,7 @@ import com.project.mangerhotel.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,6 +42,7 @@ public class RoomController {
     }
 
     @PostMapping(value = "/add/new_room", consumes = "multipart/form-data", produces = "application/json")
+    @PreAuthorize("hasAuthority('admin:create')")
     public ResponseEntity<Room> addRoom(@RequestParam("roomType") String roomType, @RequestParam("roomPrice") BigDecimal roomPrice, @RequestParam("image") MultipartFile file) throws SQLException, IOException {
         String fileName= azureService.upload(file);
         return ResponseEntity.status(200).body(roomService.addNewRoom(roomType, roomPrice, fileName ));
@@ -48,6 +50,7 @@ public class RoomController {
 
     @GetMapping("/room-types")
     public List<String> getRoomType(){
+        System.out.println("Running get room Types");
         return roomService.getAllRoomType();
     }
 
@@ -58,11 +61,12 @@ public class RoomController {
     }
 
     @PutMapping(value="/edit/room/{id}", consumes = "multipart/form-data", produces = "application/json")
+    @PreAuthorize("hasAuthority('admin:update')")
     public ResponseEntity<Room> editRoom(@PathVariable("id") Long id,@RequestParam("roomType") String roomType, @RequestParam("roomPrice") BigDecimal roomPrice, @RequestParam("image") MultipartFile file) throws IOException {
         return ResponseEntity.ok(roomService.updateRoom(id,roomType,roomPrice,file));
     }
 
-    // get all rooms available from the checkin day to checkout day
+    // get all rooms available from the checkin day to check out day
 
     @GetMapping("/rooms/available")
     public List<RoomResponse> geAllAvailableRoom(
@@ -86,13 +90,13 @@ public class RoomController {
 
     @GetMapping("/all-rooms")
     public ResponseEntity<List<Room>> getAllRooms(){
-        System.out.println("Get all rooms");
+        System.out.println("Fetching all rooms");
         return ResponseEntity.ok(roomService.getAllRooms());
     }
 
 
     @GetMapping("/room/{id}")
-    public ResponseEntity<Optional<Room>> getRoomById(@PathVariable("id") Long id) {
+    public ResponseEntity<Room> getRoomById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(roomService.getRoomById(id));
     }
 
@@ -100,6 +104,7 @@ public class RoomController {
     //[DELETE] room by id
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('admin:delete')")
     public ResponseEntity<String> deleteRoom(@PathVariable("id") Long id){
         return ResponseEntity.ok(roomService.deleteRoom(id));
     }
