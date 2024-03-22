@@ -5,7 +5,9 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Entity
@@ -23,5 +25,16 @@ public class Room {
 
     @OneToMany(mappedBy = "room",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BookedRoom> bookings;
+
+    public void addBooking(BookedRoom booking){
+        if(bookings==null){
+            bookings = new ArrayList<>();
+        }
+        bookings.add(booking);
+        booking.setRoom(this);
+        booked = true;
+        String bookingCode = UUID.randomUUID().toString();
+        booking.setBookingConfirmationCode(bookingCode);
+    }
 
 }

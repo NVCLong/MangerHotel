@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {addRoom, getRoomByID, updateRooms} from "../../utils/ApiFunction";
-import {Link, useParams} from "react-router-dom";
+import {Link, useLocation, useParams} from "react-router-dom";
 import RoomTypeSelector from "../common/RoomTypeSelector";
 import {Alert, Box, InputAdornment, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
@@ -9,21 +9,22 @@ const EditRoom = () => {
     const[room, setRoom] = useState({
         roomType: "",
         roomPrice: "",
-        images: "",
+        photo: "",
     });
 
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
-    const [imagesPreview, setImagesPreview] = useState("");
+    const [imagesPreview, setImagesPreview] = useState();
 
-    const {roomID} = useParams();
+    const query = new URLSearchParams(useLocation().search);
+    const roomID = query.get('id');
 
     useEffect(() => {
         const fetchRoom = async () => {
             try {
                 const response = await getRoomByID(roomID);
                 setRoom(response);
-                setImagesPreview(response.images);
+                setImagesPreview(`http://localhost:8080/api/v1/photo/${response.photo}`);
             }catch (error){
                 console.log(error.message);
             }

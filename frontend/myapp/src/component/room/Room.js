@@ -1,57 +1,86 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
+import {getAllRooms} from "../../utils/ApiFunction";
+import {Alert, Container, Pagination} from "@mui/material";
+import RoomCard from "./RoomCard";
+import {Col, Row} from "react-bootstrap";
+import RoomFilter from "../common/RoomFilter";
+import RoomPagination from "../common/RoomPagination";
 
-export default function Room() {
+const Room= ()=> {
+    const [data, setData] = useState([]); // Replace with actual data
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [roomsPerPage] = useState(6);
+    const [filterData, setFilterData] = useState([{id:""}]);
+
+    useEffect(() => {
+        const fetchRooms = async () => {
+            setLoading(true);
+            try {
+                const response = await getAllRooms();
+                setData(response);
+                setFilterData(response);
+                setLoading(false);
+            } catch (error) {
+                setError(error.message);
+                setLoading(false);
+            }
+        }
+        fetchRooms();
+    }, []);
+
+    if(loading){
+        return <div>Loading rooms.....</div>
+    }
+    if (error) {
+        return <Alert severity="error" sx={{ mt: 5 }}>{error}</Alert>
+    }
+    if(success){
+        return <Alert severity="success" sx={{ mt: 5 }}>{success}</Alert>
+    }
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    }
+
+    const totalPages = Math.ceil(filterData.length / roomsPerPage);
+
+    const renderRoom = () => {
+        const startIndex = (currentPage - 1) * roomsPerPage;
+        const endIndex = startIndex + roomsPerPage;
+        return filterData.slice(startIndex,endIndex).map((room) => <RoomCard key={room.id} room={room}/>);
+    }
+
     return (
-        <div className="max-w-6xl mx-auto my-8 p-4">
-            <div className="flex justify-between items-center mb-4">
-                <Select
-                    variant="standard"
-                    displayEmpty
-                    inputProps={{ 'aria-label': 'Select a room type to filter...' }}
-                >
-                    <MenuItem disabled value="">
-                        Select a room type to filter...
-                    </MenuItem>
-                    <MenuItem value="suite">Suite</MenuItem>
-                    <MenuItem value="deluxe">Deluxe</MenuItem>
-                    <MenuItem value="standard">Standard</MenuItem>
-                </Select>
-                <Button variant="outlined">Clear Filter</Button>
-            </div>
-            <div className="grid grid-cols-1 gap-4">
-                <Card className="flex items-center p-4">
-                    <img
-                        alt="Family Suite 6"
-                        className="w-48 h-32 mr-4"
-                        src="/placeholder.svg"
-                        style={{
-                            aspectRatio: '200/150',
-                            objectFit: 'cover',
-                        }}
-                    />
-                    <div>
-                        <h3 className="text-lg font-semibold">Family Suite 6</h3>
-                        <p className="text-gray-500">$1000/night</p>
-                        <p>Some room descriptions and services information can go here for customers to read.</p>
-                        <Button className="book-button" variant="contained">View/Book Now</Button>
-                    </div>
-                </Card>
-                {/* Repeat similar Card components for other rooms */}
-            </div>
-            <div className="flex justify-center mt-8">
-                <nav aria-label="Page navigation">
-                    <ul className="flex list-none">
-                        <li className="px-3 py-2 border rounded-l-md border-gray-300 bg-white text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                            1
-                        </li>
-                        {/* Add similar list items for pagination */}
-                    </ul>
-                </nav>
-            </div>
-        </div>
+        <Container>
+            <Row>
+                <Col md={6} className="mb-3 mb-md-0">
+                    <RoomFilter data={data} setFilterData={setFilterData}/>
+                </Col>
+                <Col md={6} className="flex items-center justify-end pb-12">
+                    <Pagination variant="outlined" shape="rounded" count={totalPages} page={currentPage} onChange={handlePageChange} />
+                </Col>
+
+            </Row>
+
+            <Row className="flex-row flex-wrap ">
+                {renderRoom()}
+            </Row>
+
+            <Row className="mt-12">
+                <Col md={12} className="flex items-center justify-center">
+                    <Pagination variant="outlined" shape="rounded" count={totalPages} page={currentPage} onChange={handlePageChange} />
+                </Col>
+            </Row>
+
+        </Container>
     );
 }
+
+export default  Room;
