@@ -48,6 +48,7 @@ public class RoomController {
 
     @GetMapping("/room-types")
     public List<String> getRoomType(){
+        System.out.println("Running get room Types");
         return roomService.getAllRoomType();
     }
 
@@ -62,7 +63,7 @@ public class RoomController {
         return ResponseEntity.ok(roomService.updateRoom(id,roomType,roomPrice,file));
     }
 
-    // get all rooms available from the checkin day to checkout day
+    // get all rooms available from the checkin day to check out day
 
     @GetMapping("/rooms/available")
     public List<RoomResponse> geAllAvailableRoom(
