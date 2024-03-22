@@ -28,7 +28,7 @@ public class BookingController {
     private RoomService roomService;
 
     @GetMapping("/history")
-    @PreAuthorize("hasAuthority('admin:read')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<BookingResponse>> getAllBooking(){
         List<BookedRoom> bookings = bookingService.getAllBooking();
         List<BookingResponse> bookingResponses = new ArrayList<>();
@@ -85,6 +85,8 @@ public class BookingController {
                 room.getRoomType(),
                 room.getRoomPrice()
         );
+
+        theRoom.setBooked(room.isBooked());
 
         return new BookingResponse(
                 booking.getBookingId(),
