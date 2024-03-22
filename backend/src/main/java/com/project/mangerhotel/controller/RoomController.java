@@ -10,6 +10,7 @@ import com.project.mangerhotel.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,6 +42,7 @@ public class RoomController {
     }
 
     @PostMapping(value = "/add/new_room", consumes = "multipart/form-data", produces = "application/json")
+    @PreAuthorize("hasAuthority('admin:create')")
     public ResponseEntity<Room> addRoom(@RequestParam("roomType") String roomType, @RequestParam("roomPrice") BigDecimal roomPrice, @RequestParam("image") MultipartFile file) throws SQLException, IOException {
         String fileName= azureService.upload(file);
         return ResponseEntity.status(200).body(roomService.addNewRoom(roomType, roomPrice, fileName ));
@@ -58,6 +60,7 @@ public class RoomController {
     }
 
     @PutMapping(value="/edit/room/{id}", consumes = "multipart/form-data", produces = "application/json")
+    @PreAuthorize("hasAuthority('admin:update')")
     public ResponseEntity<Room> editRoom(@PathVariable("id") Long id,@RequestParam("roomType") String roomType, @RequestParam("roomPrice") BigDecimal roomPrice, @RequestParam("image") MultipartFile file) throws IOException {
         return ResponseEntity.ok(roomService.updateRoom(id,roomType,roomPrice,file));
     }
@@ -100,6 +103,7 @@ public class RoomController {
     //[DELETE] room by id
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('admin:delete')")
     public ResponseEntity<String> deleteRoom(@PathVariable("id") Long id){
         return ResponseEntity.ok(roomService.deleteRoom(id));
     }
