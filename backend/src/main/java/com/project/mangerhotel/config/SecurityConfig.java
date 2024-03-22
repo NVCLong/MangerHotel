@@ -34,6 +34,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/photo/**").permitAll()
                         .requestMatchers("/api/v1/delete/**").permitAll()
                         .requestMatchers("/bookings/**").permitAll()
+                        .requestMatchers("/api/v1/**").permitAll()
                         .anyRequest().authenticated()
                 ).sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
