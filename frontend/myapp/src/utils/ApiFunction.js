@@ -31,7 +31,9 @@ export async function addRoom(roomType, roomPrice, images)
 
 export async function getRoomsType( ){
     try{
-        const response = await api.get("/api/v1/room-types");
+        const response = await api.get("/api/v1/room-types",{
+            headers: getHeaders()
+        });
         return response.data;
     }catch (error){
         throw new Error("Error fetching room types")

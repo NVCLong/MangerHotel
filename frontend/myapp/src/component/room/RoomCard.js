@@ -2,9 +2,10 @@ import {CardBody, CardImg, CardText, CardTitle, Col} from "react-bootstrap";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
 import {CardContent, CardMedia, Grid, Typography} from "@mui/material";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const RoomCard = ({room}) => {
+    const navigator=useNavigate();
     return (
         <Grid item mt={3} pd={3}>
             <Card >
@@ -30,7 +31,10 @@ const RoomCard = ({room}) => {
 
                     <Grid item>
                         <Link to={`/book-room?id=${room.id}`}>
-                            <Button variant="contained" color="primary">Book Now</Button>
+                            <Button variant="contained" color="primary" onClick={(e)=>{
+                                e.preventDefault();
+                                navigator(`/book-room/${room.id}`);
+                            }}>Book Now</Button>
                         </Link>
                     </Grid>
                 </Grid>
