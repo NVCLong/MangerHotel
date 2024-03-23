@@ -1,5 +1,6 @@
 package com.project.mangerhotel.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -23,6 +24,7 @@ public class Room {
     private boolean booked= false;
     private String photo;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "room",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BookedRoom> bookings;
 

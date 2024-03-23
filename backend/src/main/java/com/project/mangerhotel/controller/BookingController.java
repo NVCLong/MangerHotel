@@ -10,6 +10,7 @@ import com.project.mangerhotel.services.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class BookingController {
     private RoomService roomService;
 
     @GetMapping("/history")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<BookingResponse>> getAllBooking(){
         List<BookedRoom> bookings = bookingService.getAllBooking();
         List<BookingResponse> bookingResponses = new ArrayList<>();
@@ -77,12 +79,14 @@ public class BookingController {
 
 
     public BookingResponse getBookingResponse(BookedRoom booking){
-        Room room = roomService.getRoomById(booking.getRoom().getId()).get();
+        Room room = roomService.getRoomById(booking.getRoom().getId());
         RoomResponse theRoom = new RoomResponse(
                 room.getId(),
                 room.getRoomType(),
                 room.getRoomPrice()
         );
+
+        theRoom.setBooked(room.isBooked());
 
         return new BookingResponse(
                 booking.getBookingId(),

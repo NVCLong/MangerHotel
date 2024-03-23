@@ -1,5 +1,6 @@
 package com.project.mangerhotel.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.relational.core.mapping.Table;
@@ -36,6 +37,7 @@ public class BookedRoom {
     @Column(name="confirmed_code")
     private String bookingConfirmationCode;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="room_id")
     private Room room;
