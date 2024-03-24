@@ -33,7 +33,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain) throws ServletException, IOException
     {
-        System.out.println(request);
         final String authorizationHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
@@ -50,7 +49,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             var isTokenValid = tokenRepository.findByToken(jwt)
                     .map(t -> t.isExpired() && t.isRevoked())
                     .orElse(false);
-            System.out.println(isTokenValid);
+            System.out.println("valid :" +isTokenValid);
             if (jwtService.isTokenValidate(jwt, user) && isTokenValid) {
                 System.out.println("checking");
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(

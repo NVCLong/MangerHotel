@@ -27,7 +27,8 @@ public class BookingRoomService {
     }
 
     public List<BookedRoom> getAllBookingByEmail(String email){
-        return null;
+        List<BookedRoom> bookings = bookingRepository.findAllByGuestEmail(email);
+        return bookings;
     }
 
     public void cancelBooking(Long id){
