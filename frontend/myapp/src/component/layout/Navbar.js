@@ -47,7 +47,7 @@ export default function Navbar() {
                                     <em>Account</em>
                                 </MenuItem>
                                 { !isLoggedIn ? (
-                                    <MenuItem component={Link} to="/login" value="">Login</MenuItem>):(
+                                    <MenuItem component={Link} to="/" value="">Login</MenuItem>):(
                                     <>
                                     <MenuItem component={Link} to="/profile" value="profile">Profile</MenuItem>
                                     <Divider />
