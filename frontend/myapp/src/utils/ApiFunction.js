@@ -107,7 +107,7 @@ export async function bookRoom(roomId, booking) {
 export async function getAllBookings(email) {
     try {
         console.log(email)
-        const result = await api.get(`/user/${email}/all-bookings`, {
+        const result = await api.get(`/bookings/user/${email}/booking`, {
             headers: getHeaders()
         })
         console.log(result.data)

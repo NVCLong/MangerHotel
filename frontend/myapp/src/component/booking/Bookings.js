@@ -11,14 +11,17 @@ const Bookings = () => {
     const [email, setEmail]= useState("")
 
 
-    useEffect(async () => {
+    useEffect( () => {
         const access_token= localStorage.getItem("access_token")
         const email= jwtDecode(access_token).sub;
-        console.log(email)
         setEmail(email);
-        const data= await getAllBookings(email)
-        setBookingInfo(data)
-        setIsLoading(false)
+        setTimeout(async  () => {
+            console.log(email)
+            const data= await getAllBookings(email)
+            setBookingInfo(data)
+            setIsLoading(false)
+        },1000)
+
     }, [])
 
     const handleBookingCancellation = async (bookingId) => {

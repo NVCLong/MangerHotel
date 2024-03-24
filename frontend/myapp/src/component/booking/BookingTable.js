@@ -25,7 +25,6 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
 
     return (
         <section className="p-4">
-            <DateSlider onDateChange={filterBookings} onFilterChange={filterBookings} />
             <table className="table table-bordered table-hover shadow">
                 <thead>
                 <tr>
@@ -39,7 +38,6 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
                     <th>Guest Email</th>
                     <th>Adults</th>
                     <th>Children</th>
-                    <th>Total Guest</th>
                     <th>Confirmation Code</th>
                     <th colSpan={2}>Actions</th>
                 </tr>
@@ -49,16 +47,15 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
                     <tr key={booking.id}>
                         <td>{index + 1}</td>
                         <td>{booking.id}</td>
-                        <td>{booking.room.id}</td>
-                        <td>{booking.room.roomType}</td>
-                        <td>{booking.checkInDate}</td>
-                        <td>{booking.checkOutDate}</td>
+                        <td>{booking.roomResponse.id}</td>
+                        <td>{booking.roomResponse.roomType}</td>
+                        <td>{booking.check_in}</td>
+                        <td>{booking.check_out}</td>
                         <td>{booking.guestFullName}</td>
                         <td>{booking.guestEmail}</td>
                         <td>{booking.numOfAdults}</td>
-                        <td>{booking.numOfChildren}</td>
-                        <td>{booking.totalNumOfGuests}</td>
-                        <td>{booking.bookingConfirmationCode}</td>
+                        <td>{booking.numberChildren}</td>
+                        <td>{booking.confirmCode}</td>
                         <td>
                             <button
                                 className="btn btn-danger btn-sm"
