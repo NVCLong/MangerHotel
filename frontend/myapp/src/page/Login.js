@@ -40,7 +40,7 @@ export default function Login(){
             console.log(response.data)
             localStorage.setItem("access_token",response.data.access_token);
             document.cookie=`refresh_token=${response.data.refresh_token}`
-
+            navigator("/browse-all-room")
         }
     }
 
@@ -93,7 +93,7 @@ export default function Login(){
                                         const response=await axios.get(`http://localhost:8080/api/v1/auth/oauth2/signin?email=${decoded.email}&name=${decoded.family_name}`)
                                         localStorage.setItem("access_token",response.data.access_token);
                                         document.cookie=`refresh_token=${response.data.refresh_token}`
-                                        navigator('/')
+                                        navigator('/browse-all-room')
                                     }}
                                     onError={() => {
                                         console.log('Login Failed');

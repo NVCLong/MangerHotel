@@ -12,14 +12,16 @@ export default function BookingSummary({booking, payment, isFormValid, onConfirm
     const [isProcessingPayment,setIsProcessingPayment]= useState(false);
 
     const handleConfirmBooking=()=>{
-        setIsProcessingPayment(true);
-        setTimeout(()=>{
-            setIsProcessingPayment(false);
+        console.log("On confirm")
+        setIsProcessingPayment(false)
+        setTimeout(() => {
+            setIsProcessingPayment(true)
             setIsBookingConfirmed(true)
             onConfirm()
-        },3000)
+        }, 3000)
     }
     useEffect(() => {
+        console.log(payment)
         if(isBookingConfirmed){
             navigator("/booking-success")
         }
@@ -38,10 +40,10 @@ export default function BookingSummary({booking, payment, isFormValid, onConfirm
             <div>
                 <h5>Number of Guest</h5>
                 <strong>
-                    Adult{booking.numberOfAdults > 1 ? "s" : ""}: {booking.numberOfAdults}
+                    Adult{booking.numOfAdults > 1 ? "s" : ""}: {booking.numOfAdults}
                 </strong>
                 <strong>
-                    Children{booking.numberOfChildren > 1 ? "s" : ""}: {booking.numberOfChildren}
+                    Children{booking.numOfChildren > 1 ? "s" : ""}: {booking.numOfChildren}
                 </strong>
             </div>
             {payment>0 ? (
@@ -53,11 +55,11 @@ export default function BookingSummary({booking, payment, isFormValid, onConfirm
                         <Button
                         variant='success' onclick={handleConfirmBooking}>
                             {
-                                isProcessingPayment ?(
+                                isProcessingPayment===true ?(
                                     <>
                                         <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">
-
-                                        </span> Booking Confirmedd, redirecting to payment....
+                                            Booking Confirmed, redirecting to payment....
+                                        </span>
                                     </>
                                 ):(
                                     "Confirm Booking and proceed to payment"

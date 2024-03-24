@@ -31,7 +31,9 @@ export async function addRoom(roomType, roomPrice, images)
 
 export async function getRoomsType( ){
     try{
-        const response = await api.get("/api/v1/room-types");
+        const response = await api.get("/api/v1/room-types",{
+            headers: getHeaders()
+        });
         return response.data;
     }catch (error){
         throw new Error("Error fetching room types")
@@ -102,11 +104,13 @@ export async function bookRoom(roomId, booking) {
     }
 }
 
-export async function getAllBookings() {
+export async function getAllBookings(email) {
     try {
-        const result = await api.get("/bookings/all-bookings", {
+        console.log(email)
+        const result = await api.get(`/bookings/user/${email}/booking`, {
             headers: getHeaders()
         })
+        console.log(result.data)
         return result.data
     } catch (error) {
         throw new Error(`Error fetching bookings : ${error.message}`)
@@ -128,7 +132,10 @@ export async function getBookingByConfirmationCode(confirmationCode) {
 
 export async function cancelBooking(bookingId) {
     try {
-        const result = await api.delete(`/bookings/booking/${bookingId}/delete`)
+        console.log("booking id : "+bookingId)
+        const result = await api.delete(`/bookings/${bookingId}/delete`,{
+            headers: getHeaders()
+        })
         return result.data
     } catch (error) {
         throw new Error(`Error cancelling booking :${error.message}`)
