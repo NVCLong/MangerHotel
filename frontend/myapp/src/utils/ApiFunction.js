@@ -104,11 +104,13 @@ export async function bookRoom(roomId, booking) {
     }
 }
 
-export async function getAllBookings() {
+export async function getAllBookings(email) {
     try {
-        const result = await api.get("/bookings/all-bookings", {
+        console.log(email)
+        const result = await api.get(`/user/${email}/all-bookings`, {
             headers: getHeaders()
         })
+        console.log(result.data)
         return result.data
     } catch (error) {
         throw new Error(`Error fetching bookings : ${error.message}`)

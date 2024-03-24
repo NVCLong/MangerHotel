@@ -19,6 +19,7 @@ import RoomListing from "./component/room/RoomListing";
 import Checkout from "./component/booking/CheckOut";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import "/node_modules/bootstrap/dist/js/bootstrap.min.js"
+import Bookings from "./component/booking/Bookings";
 function App() {
 
   return (
@@ -36,7 +37,7 @@ function App() {
                     <Route path="/browse-all-room" element={<RoomListing/>} />
                     <Route path="/book-room/:roomId" element={<Checkout/>}/>
                     <Route path="/booking-success" element={<BookingSuccess />} />
-                    {/*<Route path="/existing-bookings" element={<Bookings />} />*/}
+                    <Route path="/bookings" element={<Bookings />} />
                 </Routes>
               </BrowserRouter>
               <Footer/>

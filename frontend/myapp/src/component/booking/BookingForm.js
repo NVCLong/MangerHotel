@@ -3,6 +3,7 @@ import {bookRoom, getRoomByID} from "../../utils/ApiFunction";
 import {useNavigate, useParams} from "react-router-dom";
 import {Navigator} from "react-router-dom";
 import { Form, FormControl, Button } from "react-bootstrap"
+import { jwtDecode } from "jwt-decode";
 
 import moment from "moment";
 import BookingSummary from "./BookingSumary";
@@ -13,8 +14,10 @@ export default function BookingForm(){
     const[isSubmitted,setSubmitted]= useState(false);
     const[errorMessage,setErrorMessage]= useState("");
     const [roomPrice, setRoomPrice]= useState(0);
+    const [email, setEmail]= useState("")
+    const [fullName, setFullName]= useState("")
     const [booking, setBooking]=useState({
-        guestName: "",
+        guestFullName: "",
         guestEmail: "",
         checkInDate: "",
         checkOutDate: "",
@@ -44,9 +47,15 @@ export default function BookingForm(){
             throw new Error(e)
         }
     }
+    const getUser=()=>{
+        const access_token= localStorage.getItem('access_token')
+        const deocoded= jwtDecode(access_token);
+        setEmail(deocoded.sub)
+    }
 
     useEffect(() => {
         getRoomPriceById(roomId)
+        getUser();
     }, [roomId]);
 
 
@@ -115,9 +124,9 @@ export default function BookingForm(){
                                 <FormControl
                                     required
                                     type="text"
-                                    id="guestName"
-                                    name="guestName"
-                                    value={booking.guestName}
+                                    id="guestFullName"
+                                    name="guestFullName"
+                                    value={booking.guestFullName}
                                     placeholder="Enter your fullname"
                                     onChange={handleInputChange}
                                 />
@@ -135,9 +144,8 @@ export default function BookingForm(){
                                     type="email"
                                     id="guestEmail"
                                     name="guestEmail"
-                                    value={booking.guestEmail}
-                                    placeholder="Enter your email"
-                                    onChange={handleInputChange}
+                                    value={`${email}`}
+                                    placeholder={`${email}`}
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     Please enter a valid email address.
@@ -240,7 +248,7 @@ export default function BookingForm(){
                 </div>
                 <div className="col-md-6">
                     {isSubmitted===true && (
-                        <BookingSummary booking={booking} isFormValid={isValidated} onConfirm={handleBooking} payment={calculatePayment()}/>
+                        <BookingSummary booking={booking} isFormValid={isValidated} onConfirm={handleBooking()} payment={calculatePayment()}/>
                     )}
                 </div>
             </div>

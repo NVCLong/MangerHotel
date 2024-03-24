@@ -12,11 +12,13 @@ export default function BookingSummary({booking, payment, isFormValid, onConfirm
     const [isProcessingPayment,setIsProcessingPayment]= useState(false);
 
     const handleConfirmBooking=()=>{
-        setTimeout(()=>{
-            setIsProcessingPayment(true);
+        console.log("On confirm")
+        setIsProcessingPayment(false)
+        setTimeout(() => {
+            setIsProcessingPayment(true)
             setIsBookingConfirmed(true)
             onConfirm()
-        },3000)
+        }, 3000)
     }
     useEffect(() => {
         console.log(payment)
@@ -56,8 +58,8 @@ export default function BookingSummary({booking, payment, isFormValid, onConfirm
                                 isProcessingPayment===true ?(
                                     <>
                                         <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true">
-
-                                        </span> Booking Confirmedd, redirecting to payment....
+                                            Booking Confirmed, redirecting to payment....
+                                        </span>
                                     </>
                                 ):(
                                     "Confirm Booking and proceed to payment"

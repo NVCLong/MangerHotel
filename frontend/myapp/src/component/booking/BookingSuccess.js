@@ -9,7 +9,6 @@ export  default function BookingSuccess(){
     const error= location.state.error
     return (
         <div className="container">
-            <Navbar  title="Booking Success"/>
             <div className="mt-5">
                 {message ? (
                     <div>
