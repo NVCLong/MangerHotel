@@ -88,8 +88,6 @@ export default function BookingForm(){
     const handleSubmit=(e)=>{
         e.preventDefault();
         const form = e.currentTarget
-        console.log(form.checkValidity())
-        console.log(isCheckOutDateValid())
         if(form.checkValidity()===false || !isCheckOutDateValid()|| !isGuestValid()){
             e.stopPropagation()
         }else{
@@ -144,9 +142,11 @@ export default function BookingForm(){
                                     type="email"
                                     id="guestEmail"
                                     name="guestEmail"
-                                    value={`${email}`}
-                                    placeholder={`${email}`}
+                                    value={booking.guestEmail}
+                                    placeholder="Enter your email address"
+                                    onChange={handleInputChange}
                                 />
+
                                 <Form.Control.Feedback type="invalid">
                                     Please enter a valid email address.
                                 </Form.Control.Feedback>

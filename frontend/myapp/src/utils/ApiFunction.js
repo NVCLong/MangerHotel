@@ -93,7 +93,9 @@ export async function getRoomByID(roomID){
 
 export async function bookRoom(roomId, booking) {
     try {
-        const response = await api.post(`/bookings/room/${roomId}/booking`, booking)
+        const response = await api.post(`/bookings/room/${roomId}/booking`, booking,{
+            headers: getHeaders()
+        })
         return response.data
     } catch (error) {
         if (error.response && error.response.data) {
