@@ -60,13 +60,14 @@ public class BookingController {
         }
     }
 
-    @GetMapping("/{booking_id}/delete")
-    public void cancelBooking(@PathVariable Long booking_id){
-            bookingService.cancelBooking(booking_id);
+    @DeleteMapping("/{booking_id}/delete")
+    public void cancelBooking(@PathVariable("booking_id") Long booking_id){
+        System.out.println("Start finding and cancel");
+        bookingService.cancelBooking(booking_id);
     }
 
     @GetMapping("user/{email}/booking")
-    public ResponseEntity<?> getBookingByEmail(@PathVariable String email){
+    public ResponseEntity<?> getBookingByEmail(@PathVariable("email") String email){
         System.out.println("start finding bookings with email " + email);
         List<BookedRoom> bookings = bookingService.getAllBookingByEmail(email);
         List<BookingResponse> bookingResponses = new ArrayList<>();
