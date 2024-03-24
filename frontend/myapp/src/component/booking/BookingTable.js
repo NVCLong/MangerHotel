@@ -4,24 +4,14 @@ import DateSlider from "../common/DateSlider"
 
 const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
     const [filteredBookings, setFilteredBookings] = useState(bookingInfo)
-
-    const filterBookings = (startDate, endDate) => {
-        let filtered = bookingInfo
-        if (startDate && endDate) {
-            filtered = bookingInfo.filter((booking) => {
-                const bookingStarDate = parseISO(booking.checkInDate)
-                const bookingEndDate = parseISO(booking.checkOutDate)
-                return (
-                    bookingStarDate >= startDate && bookingEndDate <= endDate && bookingEndDate > startDate
-                )
-            })
-        }
-        setFilteredBookings(filtered)
+    const handleCancel=(bookingId)=>{
+        handleBookingCancellation(bookingId);
+        window.location.reload();
     }
 
-    useEffect(() => {
-        setFilteredBookings(bookingInfo)
-    }, [bookingInfo])
+    // useEffect(() => {
+    //     setFilteredBookings(bookingInfo)
+    // }, [bookingInfo])
 
     return (
         <section className="p-4">
@@ -43,7 +33,7 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
                 </tr>
                 </thead>
                 <tbody className="text-center">
-                {filteredBookings.map((booking, index) => (
+                {bookingInfo.map((booking, index) => (
                     <tr key={booking.id}>
                         <td>{index + 1}</td>
                         <td>{booking.id}</td>
@@ -59,7 +49,9 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
                         <td>
                             <button
                                 className="btn btn-danger btn-sm"
-                                onClick={() => handleBookingCancellation(booking.id)}>
+                                onClick={()=>{
+                                    handleCancel(booking.id)
+                                }}>
                                 Cancel
                             </button>
                         </td>
@@ -67,7 +59,7 @@ const BookingsTable = ({ bookingInfo, handleBookingCancellation }) => {
                 ))}
                 </tbody>
             </table>
-            {filterBookings.length === 0 && <p> No booking found for the selected dates</p>}
+            {bookingInfo.length === 0 && <p> No booking found for the selected dates</p>}
         </section>
     )
 }
