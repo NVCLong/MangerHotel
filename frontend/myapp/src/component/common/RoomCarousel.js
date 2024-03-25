@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { getAllRooms } from "../../utils/ApiFunction"
 import { Link } from "react-router-dom"
 import { Card, Carousel, Col, Container, Row } from "react-bootstrap"
+import Button from "@mui/material/Button";
 
 const RoomCarousel = () => {
     const [rooms, setRooms] = useState([{ id: "", roomType: "", roomPrice: "", photo: "" }])
@@ -30,9 +31,16 @@ const RoomCarousel = () => {
 
     return (
         <section className="bg-light mb-5 mt-5 shadow">
-            <Link to={"/browse-all-rooms"} className="hote-color text-center">
+            <Button
+                component={Link}
+                to="/browse-all-rooms"
+                variant="contained"
+                color="primary"
+                className="text-center"
+                style={{ paddingBottom: '4px !important' }}
+            >
                 Browse all rooms
-            </Link>
+            </Button>
 
             <Container>
                 <Carousel indicators={false}>
