@@ -143,3 +143,16 @@ export async function cancelBooking(bookingId) {
         throw new Error(`Error cancelling booking :${error.message}`)
     }
 }
+
+export async function getAllBookingAdmin() {
+    try {
+
+        const result = await api.get(`/bookings/history`, {
+            headers: getHeaders()
+        })
+        console.log(result.data)
+        return result.data
+    } catch (error) {
+        throw new Error(`Error fetching bookings : ${error.message}`)
+    }
+}
