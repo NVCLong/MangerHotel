@@ -10,7 +10,7 @@ const Home = () => {
     const location = useLocation();
 
     const message = location.state && location.state.message;
-    const currentUser = localStorage.getItem("userId");
+    const currentUser = localStorage.getItem("user.email");
     return (
         <section>
             {message && <Alert severity="warning" px={5}>{message}</Alert>}
