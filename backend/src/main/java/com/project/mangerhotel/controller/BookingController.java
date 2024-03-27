@@ -36,7 +36,6 @@ public class BookingController {
             BookingResponse bookingResponse = getBookingResponse(booking);
             bookingResponses.add(bookingResponse);
         }
-
         return ResponseEntity.ok(bookingResponses);
     }
 

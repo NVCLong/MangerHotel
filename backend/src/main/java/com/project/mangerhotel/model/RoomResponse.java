@@ -1,16 +1,10 @@
 package com.project.mangerhotel.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.minidev.json.annotate.JsonIgnore;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import java.math.BigDecimal;
-import java.sql.Blob;
 import java.util.List;
 
 @Data
