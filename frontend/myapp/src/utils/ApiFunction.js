@@ -10,7 +10,7 @@ export const getHeaders = () => {
 }
 
 export const api = axios.create({
-    baseURL: "http://localhost:8080"
+    baseURL: "https://manager-hotel.azurewebsites.net/"
 })
 
 export async function addRoom(roomType, roomPrice, images)
