@@ -33,7 +33,7 @@ export  default  function Register(){
                     email:email,
                     password:password
                 }
-                const  response= await axios.post("https://manager-hotel.azurewebsites.net/api/v1/auth/register", user);
+                const  response= await axios.post("https://manager-hotelv2.azurewebsites.net/api/v1/auth/register", user);
                 console.log(response.data)
                 navigator("/")
             }
@@ -83,7 +83,7 @@ export  default  function Register(){
 
                                         const decoded = jwtDecode(credentialResponse.credential);
                                         console.log(decoded.family_name);
-                                        const response=await axios.get(`https://manager-hotel.azurewebsites.net/api/v1/auth/oauth2/register?email=${decoded.email}&name=${decoded.family_name}`)
+                                        const response=await axios.get(`https://manager-hotelv2.azurewebsites.net/api/v1/auth/oauth2/register?email=${decoded.email}&name=${decoded.family_name}`)
                                         localStorage.setItem("access_token",response.data.access_token);
                                         document.cookie=`refresh_token=${response.data.refresh_token}`
                                         navigator('/')

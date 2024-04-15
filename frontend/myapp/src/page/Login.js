@@ -36,7 +36,7 @@ export default function Login(){
                 email:email,
                 password:password
             }
-            const response= await axios.post("https://manager-hotel.azurewebsites.net/api/v1/auth/signin",user)
+            const response= await axios.post("https://manager-hotelv2.azurewebsites.net/api/v1/auth/signin",user)
             console.log(response.data)
             localStorage.setItem("access_token",response.data.access_token);
             document.cookie=`refresh_token=${response.data.refresh_token}`
