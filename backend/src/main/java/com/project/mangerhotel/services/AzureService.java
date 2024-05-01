@@ -29,7 +29,7 @@ public class AzureService {
     }
 
     public byte[]  getFile(String filename){
-        System.out.println(filename);
+        System.out.println("File name: "+filename);
         BlobClient blobClient= blobContainerClient.getBlobClient(filename);
         ByteArrayOutputStream outputStream= new ByteArrayOutputStream();
         blobClient.downloadStream(outputStream);

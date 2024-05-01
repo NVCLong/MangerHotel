@@ -33,7 +33,7 @@ export  default  function Register(){
                     email:email,
                     password:password
                 }
-                const  response= await axios.post("https://manager-hotelv2.azurewebsites.net/api/v1/auth/register", user);
+                const  response= await axios.post("http://localhost:8080/api/v1/auth/register", user);
                 console.log(response.data)
                 navigator("/")
             }
